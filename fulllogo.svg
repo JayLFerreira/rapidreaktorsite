@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 110" width="520" height="110">
+  <defs>
+    <linearGradient id="shieldFill2" x1="30%" y1="0%" x2="70%" y2="100%">
+      <stop offset="0%" stop-color="#071828"/>
+      <stop offset="100%" stop-color="#030c14"/>
+    </linearGradient>
+    <linearGradient id="boltFill2" x1="0%" y1="0%" x2="60%" y2="100%">
+      <stop offset="0%" stop-color="#5ef0ff"/>
+      <stop offset="100%" stop-color="#00b8d9"/>
+    </linearGradient>
+    <linearGradient id="edgeGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00dcff"/>
+      <stop offset="60%" stop-color="#0099bb"/>
+      <stop offset="100%" stop-color="#00dcff"/>
+    </linearGradient>
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#5ef0ff"/>
+      <stop offset="100%" stop-color="#00aacf"/>
+    </linearGradient>
+    <filter id="boltGlow2" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="shieldGlow2" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="textGlow" x="-5%" y="-20%" width="110%" height="140%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- ── SHIELD ICON ── -->
+  <!-- Shield body -->
+  <path d="M55 4 L12 18 L8 23 L8 58 Q8 83 55 100 Q102 83 102 58 L102 23 L98 18 Z"
+        fill="url(#shieldFill2)"/>
+  <!-- Shield outer edge -->
+  <path d="M55 4 L12 18 L8 23 L8 58 Q8 83 55 100 Q102 83 102 58 L102 23 L98 18 Z"
+        fill="none" stroke="url(#edgeGrad2)" stroke-width="1.8" filter="url(#shieldGlow2)"/>
+  <!-- Inner bevel -->
+  <path d="M55 12 L18 24 L14 28 L14 57 Q14 78 55 93 Q96 78 96 57 L96 28 L92 24 Z"
+        fill="none" stroke="rgba(0,220,255,0.16)" stroke-width="1"/>
+  <!-- Grid fill -->
+  <path d="M55 12 L18 24 L14 28 L14 57 Q14 78 55 93 Q96 78 96 57 L96 28 L92 24 Z"
+        fill="rgba(0,220,255,0.025)"/>
+  <!-- Grid lines -->
+  <line x1="36" y1="19" x2="36" y2="87" stroke="rgba(0,220,255,0.06)" stroke-width="0.8"/>
+  <line x1="55" y1="12" x2="55" y2="93" stroke="rgba(0,220,255,0.06)" stroke-width="0.8"/>
+  <line x1="74" y1="19" x2="74" y2="87" stroke="rgba(0,220,255,0.06)" stroke-width="0.8"/>
+  <line x1="16" y1="44" x2="94" y2="44" stroke="rgba(0,220,255,0.06)" stroke-width="0.8"/>
+  <line x1="14" y1="62" x2="96" y2="62" stroke="rgba(0,220,255,0.06)" stroke-width="0.8"/>
+  <!-- Corner accents -->
+  <line x1="12" y1="18" x2="22" y2="13" stroke="rgba(0,220,255,0.5)" stroke-width="1.3" stroke-linecap="round"/>
+  <line x1="98" y1="18" x2="88" y2="13" stroke="rgba(0,220,255,0.5)" stroke-width="1.3" stroke-linecap="round"/>
+  <!-- Lightning bolt -->
+  <path d="M62 17 L38 56 L54 56 L47 93 L76 54 L60 54 Z"
+        fill="url(#boltFill2)" filter="url(#boltGlow2)"/>
+  <path d="M62 17 L38 56 L54 56 L47 93 L76 54 L60 54 Z"
+        fill="none" stroke="rgba(180,245,255,0.3)" stroke-width="0.9"/>
+
+  <!-- ── WORDMARK ── -->
+  <text
+    x="126" y="72"
+    font-family="'Rajdhani', 'Arial Black', sans-serif"
+    font-size="58"
+    font-weight="700"
+    letter-spacing="3"
+    fill="url(#textGrad)"
+    filter="url(#textGlow)">RAPID REAKTOR</text>
+</svg>
