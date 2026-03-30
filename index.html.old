@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rapid Reaktor: Millisecond Response to Security Threats</title>
+    <title>Rapid Reaktor — Millisecond Response to Security Threats</title>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" rel="stylesheet">
     <style>
@@ -28,10 +28,8 @@
             --text-dim:     #566374;
             --text-bright:  #eef2f6;
             --font-display: 'Rajdhani', sans-serif;
-            --font-head:    'Space Grotesk', sans-serif;
-            --font-body:    'Space Grotesk', sans-serif;
+            --font-body:    'Inter', sans-serif;
             --font-mono:    'JetBrains Mono', monospace;
-            --bg-card:      #192027;
         }
 
         html { scroll-behavior: smooth; }
@@ -67,26 +65,46 @@
             position: fixed;
             top: 0;
             width: 100%;
-            z-index: 100;
-            background: rgba(8, 12, 16, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(8, 12, 16, 0.88);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             border-bottom: 1px solid var(--border-sub);
-            height: 64px;
+            z-index: 1000;
+        }
+
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            height: 60px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 2rem;
         }
 
-        .nav-logo {
-            font-family: var(--font-head);
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--accent);
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
             text-decoration: none;
-            letter-spacing: -0.01em;
         }
+
+        .logo img {
+            height: 44px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 0 8px rgba(0, 220, 255, 0.3));
+        }
+
+        .logo-text {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-bright);
+            letter-spacing: 0.03em;
+        }
+
+        .logo-text .u { color: var(--accent); }
 
         .nav-links {
             display: flex;
@@ -95,33 +113,15 @@
         }
 
         .nav-links a {
-            font-family: var(--font-head);
-            font-size: 0.8rem;
+            font-size: 0.875rem;
             font-weight: 500;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
             color: var(--text-dim);
             text-decoration: none;
+            letter-spacing: 0.02em;
             transition: color 0.2s;
         }
 
-        .nav-links a:hover { color: var(--text-bright); }
-
-        .nav-deploy {
-            font-family: var(--font-head);
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 0.06em;
-            color: var(--bg);
-            background: var(--accent);
-            border: none;
-            border-radius: 6px;
-            padding: 0.5rem 1.1rem;
-            cursor: pointer;
-            transition: opacity 0.2s, transform 0.1s;
-        }
-
-        .nav-deploy:hover { opacity: 0.9; transform: scale(0.98); }
+        .nav-links a:hover { color: var(--accent); }
 
         /* ─── CONTAINER ─── */
         .container {
@@ -131,198 +131,212 @@
         }
 
         /* ─── HERO ─── */
-        .hero-section {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 64px 2rem 1rem;
-            background: var(--bg-2);
-        }
+        .hero-bg { background: var(--bg-2); }
 
-        .hero-brand {
-            font-family: var(--font-head);
-            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-            font-weight: 700;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: var(--accent);
+        .hero {
+            padding: 9rem 2rem 5rem;
             text-align: center;
-            text-shadow: 0 0 30px rgba(0, 220, 255, 0.4), 0 0 60px rgba(0, 220, 255, 0.15);
-            margin-bottom: 2.5rem;
-        }
-
-        .hero-inner {
             max-width: 1200px;
             margin: 0 auto;
-            width: 100%;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
         }
 
-        .hero-left { display: flex; flex-direction: column; gap: 2rem; }
-
-        .status-badge {
+        .eyebrow {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: rgba(0, 220, 255, 0.08);
-            border: 1px solid rgba(0, 220, 255, 0.2);
-            border-radius: 4px;
-            padding: 0.35rem 0.85rem;
             font-family: var(--font-mono);
-            font-size: 0.65rem;
-            font-weight: 600;
+            font-size: 0.7rem;
+            color: var(--accent);
             letter-spacing: 0.12em;
             text-transform: uppercase;
-            color: var(--accent);
-            width: fit-content;
+            border: 1px solid var(--border);
+            background: var(--accent-dim);
+            padding: 0.35rem 0.9rem;
+            border-radius: 2px;
+            margin-bottom: 2.25rem;
         }
 
-        .status-dot {
+        .eyebrow-dot {
             width: 6px;
             height: 6px;
             border-radius: 50%;
             background: var(--accent);
             box-shadow: 0 0 6px var(--accent);
-            animation: pulse-dot 2s ease-in-out infinite;
+            animation: blink 2s ease-in-out infinite;
         }
 
-        @keyframes pulse-dot {
+        @keyframes blink {
             0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
+            50%       { opacity: 0.35; }
         }
 
-        .hero-heading {
-            font-family: var(--font-head);
-            font-size: clamp(2.4rem, 4vw, 3.5rem);
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(3.25rem, 7.5vw, 5.75rem);
             font-weight: 700;
-            line-height: 1.1;
-            letter-spacing: -0.03em;
+            line-height: 0.92;
             color: var(--text-bright);
+            letter-spacing: -0.01em;
+            margin-bottom: 1.75rem;
         }
 
-        .hero-heading .hl {
-            color: var(--accent);
-            text-shadow: 0 0 30px rgba(0, 220, 255, 0.4);
+        .hero-title .glow-line {
             display: block;
+            background: linear-gradient(100deg, var(--accent) 10%, #00ff99 90%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .hero-sub {
-            font-size: 1rem;
+            font-size: 1.05rem;
             color: var(--text-dim);
-            line-height: 1.7;
-            max-width: 480px;
+            max-width: 540px;
+            margin: 0 auto 3rem;
+            line-height: 1.75;
         }
 
-        .hero-btns {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
+        /* ─── DASHBOARD ─── */
+        .dashboard-wrap {
+            max-width: 900px;
+            margin: 0 auto 2.5rem;
         }
 
-        .btn-primary {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-family: var(--font-head);
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--bg);
-            background: var(--accent);
-            border: none;
-            border-radius: 6px;
-            padding: 0.75rem 1.5rem;
-            cursor: pointer;
-            text-decoration: none;
-            transition: opacity 0.2s, transform 0.1s;
-        }
-
-        .btn-primary:hover { opacity: 0.9; transform: scale(0.98); }
-
-        .btn-outline {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-family: var(--font-head);
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--text-bright);
-            background: transparent;
+        .dashboard-card {
+            background: var(--bg-2);
             border: 1px solid var(--border-sub);
+            border-radius: 12px;
+            padding: 1.75rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow:
+                0 0 0 1px rgba(0,220,255,0.04),
+                0 48px 96px rgba(0,0,0,0.55),
+                inset 0 1px 0 rgba(255,255,255,0.04);
+        }
+
+        .dashboard-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, var(--accent) 50%, transparent 100%);
+            opacity: 0.5;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .stat-card {
+            background: rgba(0, 220, 255, 0.04);
+            border: 1px solid var(--border);
             border-radius: 6px;
-            padding: 0.75rem 1.5rem;
-            cursor: pointer;
-            text-decoration: none;
+            padding: 1.25rem 1rem;
+            text-align: center;
             transition: border-color 0.2s, background 0.2s;
         }
 
-        .btn-outline:hover {
-            border-color: var(--border);
-            background: rgba(255,255,255,0.04);
+        .stat-card:hover {
+            border-color: rgba(0, 220, 255, 0.35);
+            background: rgba(0, 220, 255, 0.07);
         }
 
-        /* ─── RIGHT PANEL ─── */
-        .hero-right { display: flex; flex-direction: column; gap: 1rem; }
-
-        .panel {
-            background: var(--bg-card);
-            border: 1px solid var(--border-sub);
-            border-radius: 10px;
-            overflow: hidden;
+        .stat-num {
+            font-family: var(--font-display);
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-shadow: 0 0 18px var(--accent-glow);
+            line-height: 1;
+            margin-bottom: 0.4rem;
+            transition: transform 0.2s ease;
         }
 
-        .panel-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0.875rem 1.25rem;
-            border-bottom: 1px solid var(--border-sub);
-        }
-
-        .panel-title {
+        .stat-label {
             font-family: var(--font-mono);
             font-size: 0.65rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
+            font-weight: 500;
             color: var(--text-dim);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
         }
-
-        .panel-title .material-symbols-outlined { font-size: 0.9rem; color: var(--accent); }
-
-        .traffic-lights { display: flex; gap: 0.35rem; }
-        .tl { width: 9px; height: 9px; border-radius: 50%; }
-        .tl-red    { background: #ff5f57; }
-        .tl-orange { background: #febc2e; }
-        .tl-green  { background: #28c840; }
 
         /* ─── ACTIVITY FEED ─── */
         .activity-feed {
+            background: rgba(4, 8, 12, 0.7);
+            border: 1px solid var(--border-sub);
+            border-radius: 6px;
+            padding: 1rem 1rem 0.625rem;
+            min-height: 185px;
+            max-height: 185px;
             overflow: hidden;
-            height: calc(40px * 6);
         }
 
-        .activity-row {
+        .feed-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.625rem;
+            border-bottom: 1px solid var(--border-sub);
+        }
+
+        .feed-header::before {
+            content: '$';
+            color: var(--accent);
+            opacity: 0.8;
+        }
+
+        .feed-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 4px var(--green);
+            margin-left: auto;
+            animation: blink 1.5s ease-in-out infinite;
+        }
+
+        .activity-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            height: 40px;
-            padding: 0 1.25rem;
-            border-bottom: 1px solid rgba(255,255,255,0.03);
+            padding: 0.45rem 0.625rem;
+            background: rgba(255, 255, 255, 0.015);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 4px;
+            margin-bottom: 0.375rem;
             font-family: var(--font-mono);
-            font-size: 0.76rem;
+            font-size: 0.78rem;
             color: var(--text);
-            gap: 0.5rem;
+            opacity: 0;
+            animation: slideIn 0.35s forwards;
         }
 
-        .activity-row:last-child { border-bottom: none; }
+        .activity-item:nth-child(2) { animation-delay: 0.05s; }
+        .activity-item:nth-child(3) { animation-delay: 0.12s; }
+        .activity-item:nth-child(4) { animation-delay: 0.2s;  }
 
-        .activity-prefix { color: var(--text-dim); margin-right: 0.2rem; }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-10px); }
+            to   { opacity: 1; transform: translateX(0);     }
+        }
+
+        @keyframes slideOut {
+            from { opacity: 1; transform: translateX(0);    }
+            to   { opacity: 0; transform: translateX(10px); }
+        }
+
+        .activity-prefix { color: var(--text-dim); margin-right: 0.3rem; }
 
         .activity-ip {
             color: var(--accent);
@@ -333,52 +347,50 @@
         .activity-list { color: var(--text-dim); }
 
         .activity-time {
-            font-family: var(--font-mono);
-            font-size: 0.65rem;
+            font-size: 0.68rem;
             color: var(--text-dim);
             flex-shrink: 0;
-            margin-left: auto;
+            margin-left: 1rem;
         }
 
-        /* ─── STATS BAR (below panel) ─── */
-        .stats-bar {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            border-top: 1px solid var(--border-sub);
-            padding-top: 1.5rem;
-        }
+        /* ─── CTA ─── */
+        .cta-wrap { text-align: center; margin-top: 2rem; }
 
-        .stat-item {
-            padding-right: 1.5rem;
-            border-right: 1px solid var(--border-sub);
-        }
-
-        .stat-item:last-child { border-right: none; padding-right: 0; padding-left: 1.5rem; }
-        .stat-item:nth-child(2) { padding-left: 1.5rem; }
-        .stat-item:nth-child(3) { padding-left: 1.5rem; }
-
-        .stat-label {
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.625rem;
             font-family: var(--font-mono);
-            font-size: 0.58rem;
-            letter-spacing: 0.1em;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
-            color: var(--text-dim);
-            margin-bottom: 0.3rem;
+            color: #060a0e;
+            background: var(--accent);
+            border: none;
+            padding: 0.9rem 2.25rem;
+            border-radius: 3px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.15s, box-shadow 0.2s;
+            box-shadow: 0 0 20px rgba(0,220,255,0.18);
         }
 
-        .stat-value {
-            font-family: var(--font-head);
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--text-bright);
-            line-height: 1;
-            transition: transform 0.2s ease;
+        .cta-button::after {
+            content: '→';
+            transition: transform 0.2s;
         }
 
-        .stat-value.accent { color: var(--accent); }
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 36px rgba(0,220,255,0.48), 0 8px 24px rgba(0,0,0,0.3);
+        }
+
+        .cta-button:hover::after { transform: translateX(3px); }
+        .cta-button:active { transform: translateY(0); }
 
         /* ─── SECTION COMMONS ─── */
-        .section { padding: 2.5rem 2rem; }
+        .section { padding: 6rem 2rem; }
 
         .section-label {
             font-family: var(--font-mono);
@@ -412,7 +424,7 @@
             border-bottom: 1px solid var(--border-sub);
             position: relative;
             overflow: hidden;
-            padding-bottom: 0;
+            padding-bottom: 3rem;
         }
 
         .how-header {
@@ -433,13 +445,13 @@
 
         .how-main-title {
             font-family: 'Space Grotesk', var(--font-display);
-            font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+            font-size: clamp(2.5rem, 7vw, 4.5rem);
             font-weight: 700;
-            letter-spacing: -0.03em;
+            letter-spacing: -0.04em;
             text-shadow: 0 0 15px rgba(0, 242, 255, 0.5);
             color: var(--text-bright);
             margin-bottom: 1.5rem;
-            line-height: 1.1;
+            line-height: 1;
         }
 
         .how-main-sub {
@@ -452,24 +464,16 @@
         }
 
         .how-kinetic-flow {
-            display: grid;
-            grid-template-columns: 1fr;
+            display: flex;
+            flex-direction: column;
             gap: 1.5rem;
             position: relative;
             margin-bottom: 5rem;
         }
 
         @media (min-width: 1024px) {
-            .how-kinetic-flow { grid-template-columns: repeat(4, 1fr); align-items: stretch; }
+            .how-kinetic-flow { flex-direction: row; align-items: stretch; }
         }
-
-        .how-icon-box--loop {
-            background: rgba(0, 217, 126, 0.1);
-            border: 1px solid rgba(0, 217, 126, 0.3);
-            box-shadow: 0 0 20px rgba(0, 217, 126, 0.2);
-        }
-
-        .glass-card:hover .how-icon-box--loop { box-shadow: 0 0 30px rgba(0, 217, 126, 0.4); }
 
         .kinetic-connector {
             display: none;
@@ -503,16 +507,9 @@
             position: relative;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
             gap: 1.5rem;
             flex: 1;
             z-index: 1;
-        }
-
-        .how-card-body {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
         }
 
         .glass-card:hover {
@@ -524,10 +521,11 @@
         .glass-card--core {
             border-color: rgba(0, 241, 254, 0.3);
             background: rgba(30, 39, 46, 0.6);
+            transform: scale(1.05);
             z-index: 2;
         }
 
-        .glass-card--core:hover { transform: translateY(-4px); }
+        .glass-card--core:hover { transform: scale(1.05) translateY(-4px); }
 
         .how-step-num { display: none; }
 
@@ -589,7 +587,7 @@
         .how-card-desc {
             color: #a6acb3;
             line-height: 1.65;
-            margin-bottom: 0;
+            margin-bottom: 2rem;
             font-size: 0.9rem;
         }
 
@@ -615,7 +613,7 @@
         .how-flow-btn--muted { color: #a6acb3; font-size: 0.65rem; }
         .how-flow-btn--muted:hover { color: var(--text-bright); }
 
-        .how-flow-btns { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: auto; }
+        .how-flow-btns { display: flex; gap: 1.5rem; }
 
         .how-viz {
             width: 100%;
@@ -715,26 +713,31 @@
         }
 
         .features-cap-label {
-            font-family: var(--font-head);
-            font-size: clamp(2.8rem, 5vw, 4rem);
+            font-family: var(--font-display);
+            font-size: 1.75rem;
             font-weight: 700;
             color: var(--accent);
-            letter-spacing: -0.02em;
-            line-height: 1;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
             margin-bottom: 0.75rem;
         }
 
         .features-title {
-            font-family: var(--font-head);
-            font-size: 1.15rem;
+            font-family: var(--font-display);
+            font-size: 2.8rem;
             font-weight: 700;
             color: var(--text-bright);
-            letter-spacing: -0.01em;
-            line-height: 1.5;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            line-height: 1.1;
             margin-bottom: 1.25rem;
-            text-shadow: 0 0 30px rgba(0, 220, 255, 0.4), 0 0 60px rgba(0, 220, 255, 0.15);
         }
 
+        .features-title .hl {
+            display: block;
+            color: var(--accent);
+            text-shadow: 0 0 28px var(--accent-glow), 0 0 60px rgba(0,220,255,0.15);
+        }
 
         .features-sub {
             font-size: 0.95rem;
@@ -761,58 +764,21 @@
         .feat-row-3 { margin-bottom: 1.25rem; }
 
         .feature-card {
-            background: linear-gradient(145deg, rgba(25, 35, 45, 0.9), rgba(16, 24, 32, 0.95));
-            border: 1px solid rgba(0, 220, 255, 0.12);
-            border-radius: 12px;
+            background: var(--bg-3);
+            border: 1px solid var(--border-sub);
+            border-radius: 8px;
             padding: 1.75rem;
             position: relative;
-            transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
-            box-shadow:
-                0 0 0 1px rgba(0, 220, 255, 0.04),
-                0 4px 24px rgba(0, 0, 0, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.06),
-                inset 0 0 30px rgba(0, 220, 255, 0.03);
-            backdrop-filter: blur(8px);
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 12px;
-            background: linear-gradient(135deg, rgba(0, 220, 255, 0.05) 0%, transparent 60%);
-            pointer-events: none;
+            transition: border-color 0.25s, transform 0.25s;
         }
 
         .feature-card:hover {
-            border-color: rgba(0, 220, 255, 0.35);
-            transform: translateY(-4px);
-            box-shadow:
-                0 0 0 1px rgba(0, 220, 255, 0.12),
-                0 8px 40px rgba(0, 0, 0, 0.5),
-                0 0 30px rgba(0, 220, 255, 0.08),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1),
-                inset 0 0 40px rgba(0, 220, 255, 0.06);
+            border-color: var(--border);
+            transform: translateY(-3px);
         }
 
-        .feature-card--center {
-            border-color: rgba(0, 220, 255, 0.25);
-            box-shadow:
-                0 0 0 1px rgba(0, 220, 255, 0.08),
-                0 4px 24px rgba(0, 0, 0, 0.4),
-                0 0 20px rgba(0, 220, 255, 0.06),
-                inset 0 1px 0 rgba(255, 255, 255, 0.08),
-                inset 0 0 30px rgba(0, 220, 255, 0.05);
-        }
-        .feature-card--center:hover {
-            border-color: rgba(0, 220, 255, 0.55);
-            box-shadow:
-                0 0 0 1px rgba(0, 220, 255, 0.18),
-                0 8px 40px rgba(0, 0, 0, 0.5),
-                0 0 40px rgba(0, 220, 255, 0.14),
-                inset 0 1px 0 rgba(255, 255, 255, 0.12),
-                inset 0 0 50px rgba(0, 220, 255, 0.08);
-        }
+        .feature-card--center { border-color: rgba(0, 220, 255, 0.2); }
+        .feature-card--center:hover { border-color: var(--accent); }
 
         .feature-card--wide {
             display: flex;
@@ -1143,18 +1109,16 @@
         .footer-links a:hover { color: var(--accent); }
 
         /* ─── RESPONSIVE ─── */
-        @media (max-width: 900px) {
-            .hero-inner  { grid-template-columns: 1fr; }
-            .hero-right  { display: none; }
-        }
-
         @media (max-width: 768px) {
+            .stats-grid  { grid-template-columns: repeat(2, 1fr); }
             .flow-row    { flex-direction: column; }
             .flow-conn   { display: none; }
             .flow-cta    { flex-direction: column; gap: 1.5rem; }
             .footer      { flex-direction: column; gap: 1.5rem; align-items: flex-start; }
             .footer-links { flex-wrap: wrap; gap: 1rem; }
             .nav-links   { display: none; }
+            .hero-title  { font-size: 3rem; }
+            .hero        { padding: 7rem 1.5rem 4rem; }
             .feat-row-1, .feat-row-2 { grid-template-columns: 1fr; }
             .feature-card--wide { flex-direction: column; align-items: flex-start; }
             .integrated-section { grid-template-columns: 1fr; }
@@ -1166,118 +1130,88 @@
 
 <!-- NAV -->
 <nav>
-    <a href="#" class="nav-logo">Rapid Reaktor</a>
-    <div class="nav-links">
-        <a href="#features">Features</a>
-        <a href="#how-it-works">How it Works</a>
-        <a href="#docs">Docs</a>
+    <div class="nav-inner">
+        <a href="#" class="logo">
+            <img src="smalllogo.png" alt="Rapid Reaktor">
+            <span class="logo-text">rapid<span class="u">_</span>reaktor</span>
+        </a>
+        <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#docs">Docs</a>
+        </div>
     </div>
-    <button class="nav-deploy" onclick="openModal()">Deploy Shield</button>
 </nav>
 
 <!-- HERO -->
-<section class="hero-section">
-    <div class="hero-brand">RAPID REAKTOR</div>
-    <div class="hero-inner">
+<div class="hero-bg">
+<section class="hero">
+    <div class="eyebrow">
+        <span class="eyebrow-dot"></span>
+        Live Threat Response
+    </div>
+    <h1 class="hero-title">
+        Block active attacks<br>
+        <span class="glow-line">automatically.</span>
+    </h1>
+    <p class="hero-sub">
+        Stop chasing IPs. Rapid Reaktor automates your defense with real-time EDLs, so your team can get back to building the future.
+    </p>
 
-        <!-- LEFT -->
-        <div class="hero-left">
-            <div class="status-badge">
-                <span class="status-dot"></span>
-                System Status: Active Defense
-            </div>
-
-            <h1 class="hero-heading">
-                Your Firewall Should Block Attackers Automatically.
-                <span class="hl">Now It Can.</span>
-            </h1>
-
-            <p class="hero-sub">
-                The average manual block takes 15–30 minutes. Rapid Reaktor does it in seconds. Self-hosted, configurable, and auditable down to the source alert that triggered every single block.
-            </p>
-
-            <div class="hero-btns">
-                <a href="#" class="btn-primary" onclick="event.preventDefault(); openModal();">
-                    Initialize Reaktor
-                    <span class="material-symbols-outlined" style="font-size:1rem;">bolt</span>
-                </a>
-                <a href="#features" class="btn-outline">
-                    View Features
-                </a>
-            </div>
-        </div>
-
-        <!-- RIGHT -->
-        <div class="hero-right">
-            <div class="panel">
-                <div class="panel-header">
-                    <div class="panel-title">
-                        <span class="material-symbols-outlined">monitor_heart</span>
-                        Recent Activity
-                    </div>
-                    <div class="traffic-lights">
-                        <div class="tl tl-red"></div>
-                        <div class="tl tl-orange"></div>
-                        <div class="tl tl-green"></div>
-                    </div>
-                </div>
-                <div class="activity-feed" id="activityFeed">
-                    <div class="activity-row">
-                        <span class="activity-prefix">+</span> added <span class="activity-ip">45.76.112.34</span> <span class="activity-list">→ ssh-blocklist</span>
-                        <span class="activity-time">2s ago</span>
-                    </div>
-                    <div class="activity-row">
-                        <span class="activity-prefix">+</span> added <span class="activity-ip">91.134.22.187</span> <span class="activity-list">→ brute-force</span>
-                        <span class="activity-time">5s ago</span>
-                    </div>
-                    <div class="activity-row">
-                        <span class="activity-prefix">+</span> added <span class="activity-ip">185.220.101.53</span> <span class="activity-list">→ vpn-threats</span>
-                        <span class="activity-time">12s ago</span>
-                    </div>
-                    <div class="activity-row">
-                        <span class="activity-prefix">+</span> added <span class="activity-ip">77.88.55.241</span> <span class="activity-list">→ ssh-blocklist</span>
-                        <span class="activity-time">28s ago</span>
-                    </div>
-                    <div class="activity-row">
-                        <span class="activity-prefix">+</span> added <span class="activity-ip">162.55.18.247</span> <span class="activity-list">→ brute-force</span>
-                        <span class="activity-time">45s ago</span>
-                    </div>
-                    <div class="activity-row">
-                        <span class="activity-prefix">+</span> added <span class="activity-ip">51.89.153.112</span> <span class="activity-list">→ ssh-blocklist</span>
-                        <span class="activity-time">1m ago</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="stats-bar">
-                <div class="stat-item">
+    <div class="dashboard-wrap">
+        <div class="dashboard-card">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-num">23</div>
                     <div class="stat-label">Total Rules</div>
-                    <div class="stat-value">23</div>
                 </div>
-                <div class="stat-item">
+                <div class="stat-card">
+                    <div class="stat-num">18</div>
                     <div class="stat-label">Active Rules</div>
-                    <div class="stat-value accent">18</div>
                 </div>
-                <div class="stat-item">
+                <div class="stat-card">
+                    <div class="stat-num" id="totalActions">1,847</div>
                     <div class="stat-label">Total Actions</div>
-                    <div class="stat-value" id="totalActions">1,847</div>
                 </div>
-                <div class="stat-item">
+                <div class="stat-card">
+                    <div class="stat-num" id="recentActions">92</div>
                     <div class="stat-label">Actions (24h)</div>
-                    <div class="stat-value" id="recentActions">92</div>
+                </div>
+            </div>
+
+            <div class="activity-feed" id="activityFeed">
+                <div class="feed-header">
+                    recent_activity
+                    <span class="feed-dot"></span>
+                </div>
+                <div class="activity-item">
+                    <span><span class="activity-prefix">+</span> added <span class="activity-ip">45.76.112.34</span> <span class="activity-list">→ ssh-blocklist</span></span>
+                    <span class="activity-time">2s ago</span>
+                </div>
+                <div class="activity-item">
+                    <span><span class="activity-prefix">+</span> added <span class="activity-ip">91.134.22.187</span> <span class="activity-list">→ brute-force</span></span>
+                    <span class="activity-time">5s ago</span>
+                </div>
+                <div class="activity-item">
+                    <span><span class="activity-prefix">+</span> added <span class="activity-ip">185.220.101.53</span> <span class="activity-list">→ vpn-threats</span></span>
+                    <span class="activity-time">12s ago</span>
                 </div>
             </div>
         </div>
+    </div>
 
+    <div class="cta-wrap">
+        <a href="#" class="cta-button" onclick="event.preventDefault(); openModal();">Try Rapid Reaktor</a>
     </div>
 </section>
+</div>
 
 <!-- HOW IT WORKS -->
-<section class="section how-section" id="how-it-works">
+<section class="section how-section">
     <div class="container">
         <div class="how-header">
-            <h2 class="how-main-title">From Detection to Block in Seconds</h2>
-            <p class="how-main-sub">Turn firewall events into instant enforcement automatically. No scripts. No delays. No analyst bottlenecks.</p>
+            <span class="how-arch-label">Architecture</span>
+            <h2 class="how-main-title">HOW IT WORKS</h2>
+            <p class="how-main-sub">Stop coordinated attacks automatically with sub-second execution through our decentralized kinetic defense architecture.</p>
         </div>
 
         <div class="how-kinetic-flow">
@@ -1285,57 +1219,54 @@
 
             <!-- Step 01: Detection -->
             <div class="glass-card">
-                <div class="how-card-body">
-                    <div class="how-icon-box how-icon-box--detect">
-                        <span class="material-symbols-outlined" style="color:#ff716c;font-size:1.875rem;">warning</span>
-                    </div>
-                    <div>
-                        <h3 class="how-card-title">Detection</h3>
-                        <p class="how-card-source">Palo Alto Firewall</p>
-                        <p class="how-card-desc">Attack activity is detected in real time<br>No dashboards, no waiting, no manual triage</p>
-                    </div>
+                <div class="how-step-num">01</div>
+                <div class="how-icon-box how-icon-box--detect">
+                    <span class="material-symbols-outlined" style="color:#ff716c;font-size:1.875rem;">warning</span>
+                </div>
+                <div>
+                    <h3 class="how-card-title">Detection</h3>
+                    <p class="how-card-source">Palo Alto Firewall</p>
+                    <p class="how-card-desc">Attack detected, syslog sent to Rapid Reaktor in real-time</p>
+                    <button class="how-flow-btn">
+                        Events <span class="material-symbols-outlined" style="font-size:1rem;">arrow_forward</span>
+                    </button>
                 </div>
             </div>
 
-            <!-- Step 02: Automated Response -->
+            <!-- Step 02: Processing -->
             <div class="glass-card glass-card--core">
-                <div class="how-card-body">
-                    <div class="how-icon-box how-icon-box--process">
-                        <span class="material-symbols-outlined" style="color:#00f1fe;font-size:1.875rem;">bolt</span>
-                    </div>
-                    <div>
-                        <h3 class="how-card-title">Automated Response</h3>
-                        <p class="how-card-source">Rapid Reaktor Engine</p>
-                        <p class="how-card-desc">Extracts attacker IPs instantly<br>Builds and updates block lists automatically<br>No scripts. No analyst bottlenecks.</p>
+                <div class="how-step-num how-step-num--core">02</div>
+                <div class="how-icon-box how-icon-box--process">
+                    <span class="material-symbols-outlined" style="color:#00f1fe;font-size:1.875rem;">bolt</span>
+                </div>
+                <div>
+                    <h3 class="how-card-title">Processing</h3>
+                    <p class="how-card-source">Rapid Reaktor Engine</p>
+                    <p class="how-card-desc">Pattern match, extract IPs, update EDL automatically</p>
+                    <div class="how-flow-btns">
+                        <button class="how-flow-btn how-flow-btn--muted">
+                            <span class="material-symbols-outlined" style="font-size:1rem;">arrow_back</span> Events
+                        </button>
+                        <button class="how-flow-btn">
+                            Commands <span class="material-symbols-outlined" style="font-size:1rem;">arrow_forward</span>
+                        </button>
                     </div>
                 </div>
             </div>
 
             <!-- Step 03: Blocking -->
             <div class="glass-card">
-                <div class="how-card-body">
-                    <div class="how-icon-box how-icon-box--block">
-                        <span class="material-symbols-outlined" style="color:#00e0fe;font-size:1.875rem;">shield</span>
-                    </div>
-                    <div>
-                        <h3 class="how-card-title">Instant Blocking</h3>
-                        <p class="how-card-source">Your Firewall</p>
-                        <p class="how-card-desc">Firewall enforces blocks automatically<br>Attackers are stopped before they retry or pivot</p>
-                    </div>
+                <div class="how-step-num">03</div>
+                <div class="how-icon-box how-icon-box--block">
+                    <span class="material-symbols-outlined" style="color:#00e0fe;font-size:1.875rem;">shield</span>
                 </div>
-            </div>
-
-            <!-- Step 04: Continuous Defense -->
-            <div class="glass-card">
-                <div class="how-card-body">
-                    <div class="how-icon-box how-icon-box--loop">
-                        <span class="material-symbols-outlined" style="color:#00d97e;font-size:1.875rem;">autorenew</span>
-                    </div>
-                    <div>
-                        <h3 class="how-card-title">Continuous Defense</h3>
-                        <p class="how-card-source">Always Active</p>
-                        <p class="how-card-desc">Every new attack strengthens your defense<br>Your block lists evolve in real time</p>
-                    </div>
+                <div>
+                    <h3 class="how-card-title">Blocking</h3>
+                    <p class="how-card-source">Your Firewall</p>
+                    <p class="how-card-desc">Firewall pulls EDL, threats blocked instantly</p>
+                    <button class="how-flow-btn how-flow-btn--muted">
+                        <span class="material-symbols-outlined" style="font-size:1rem;">arrow_back</span> Commands
+                    </button>
                 </div>
             </div>
         </div>
@@ -1347,8 +1278,9 @@
 <section class="section features-section" id="features">
     <div class="container">
         <div class="features-header">
-            <div class="features-cap-label">How It Works</div>
-            <p class="features-title">No agents. No complex integrations. No humans in the loop.</p>
+            <div class="features-cap-label">Features</div>
+            <h2 class="features-title">Engineered For <span class="hl">Total Kinetic Defense</span></h2>
+            <p class="features-sub">Rapid Reaktor orchestrates automated defensive workflows across distributed infrastructures, providing surgical precision in threat mitigation and network integrity.</p>
         </div>
 
         <div class="feat-row-1">
@@ -1357,14 +1289,15 @@
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><line x1="10" y1="2" x2="10" y2="18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="2" y1="10" x2="18" y2="10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="4.1" y1="4.1" x2="15.9" y2="15.9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="15.9" y1="4.1" x2="4.1" y2="15.9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
                 </div>
                 <div class="feature-title">Auto-Extract IPs</div>
-                <p class="feature-desc">Rapid Reaktor pulls the right IP from raw syslog output, even in NAT and proxy environments where the attacker's real address is buried. No per-rule regex tuning. No manual cleanup. It finds the IP that matters and acts on it.</p>
+                <p class="feature-desc">Utilize advanced heuristics to automatically identify and isolate malicious IP addresses from raw traffic streams in real-time, preventing lateral movement before it starts.</p>
+                <span class="feature-tag">Autonomous Protocol</span>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2L2 6l8 4 8-4-8-4z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M2 10l8 4 8-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 14l8 4 8-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </div>
                 <div class="feature-title">Dynamic EDL Management</div>
-                <p class="feature-desc">Rapid Reaktor hosts your EDL directly. It's the authoritative blocklist server your Palo Alto firewall already points at. When an IP gets added, your firewall picks it up on the next poll with zero extra configuration. No API keys to manage. No third-party sync to trust.</p>
+                <p class="feature-desc">Orchestrate External Dynamic Lists (EDL) with seamless API synchronization. Update security policies across your global fleet in milliseconds.</p>
             </div>
         </div>
 
@@ -1374,21 +1307,21 @@
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2l8 4.5v7L10 18l-8-4.5v-7L10 2z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M10 2v16" stroke="currentColor" stroke-width="1.4"/><path d="M2 6.5l8 4.5 8-4.5" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
                 </div>
                 <div class="feature-title">Docker Deployable</div>
-                <p class="feature-desc">Two ports. One Docker Compose command. Runs on the machine you already have. No vendor onboarding, no complex dependencies, no cloud data leaving your network. You're up and blocking within the hour.</p>
+                <p class="feature-desc">Cloud-native and lightweight. Rapid Reaktor instances launch in seconds on any containerized environment, ensuring consistent defense profiles.</p>
             </div>
             <div class="feature-card feature-card--center">
                 <div class="feature-icon">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><line x1="7" y1="2" x2="7" y2="18" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><line x1="13" y1="2" x2="13" y2="18" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><line x1="2" y1="7" x2="18" y2="7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><line x1="2" y1="13" x2="18" y2="13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
                 </div>
                 <div class="feature-title">Granular Trigger Logic</div>
-                <p class="feature-desc">Configure exactly what triggers a block: alert type, threshold count, regex pattern, source. Require three hits before an IP gets added. Scope rules to specific firewall sources. Suppress noisy alerts that would create false positives. You control what gets blocked and why.</p>
+                <p class="feature-desc">Design complex conditional workflows with surgical precision. Execute multi-stage responses based on specific threat vectors and metadata.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8.5" stroke="currentColor" stroke-width="1.4"/><path d="M10 5.5v4.5l3 2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </div>
                 <div class="feature-title">Smart TTL Management</div>
-                <p class="feature-desc">Every blocked IP expires automatically on the schedule you set. No permanent blocklist bloat. No forgotten entries locking out a legitimate user six months later. Blocks are temporary by default. You decide how long they last.</p>
+                <p class="feature-desc">Automatically expire temporary blocklists based on adaptive cooldown periods, reducing false positives and maintaining network velocity.</p>
             </div>
         </div>
 
@@ -1399,12 +1332,27 @@
                 </div>
                 <div class="feature-body">
                     <div class="feature-title">Audit &amp; Compliance Logging</div>
-                    <p class="feature-desc">Every automated block is recorded: the alert that triggered it, the rule that matched, the IP that got added, and the exact timestamp. Nothing is a black box. When someone asks why an IP was blocked, you have a complete answer in seconds. Export to CSV for incident reviews or compliance audits.</p>
+                    <p class="feature-desc">Maintain an immutable ledger of all defensive actions. Meet rigorous regulatory requirements with automated report generation and real-time activity streams.</p>
                 </div>
-                <a href="audit.html" class="cta-outline">View the Audit Log Schema →</a>
+                <a href="#" class="cta-outline" onclick="event.preventDefault();">View Compliance Specs</a>
             </div>
         </div>
 
+        <div class="integrated-section">
+            <div>
+                <h3 class="integrated-title">Integrated <span class="hl">Defensive Reaktor</span></h3>
+                <ul class="integrated-list">
+                    <li>Zero-latency detection engine for high-throughput environments.</li>
+                    <li>Multi-cloud cluster synchronization with encrypted mesh networking.</li>
+                    <li>Custom heuristic development kit for bespoke threat landscapes.</li>
+                </ul>
+            </div>
+            <div class="integrated-video">
+                <div class="integrated-play">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M6 4l8 5-8 5V4z" fill="currentColor"/></svg>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 
@@ -1417,7 +1365,7 @@
             <div class="modal-title">Get Started with Rapid Reaktor</div>
             <p class="modal-sub">Tell us about your security needs and we'll get in touch.</p>
 
-            <form id="contactForm" action="https://formspree.io/f/mykdygow" method="POST">
+            <form id="contactForm" action="#" method="POST">
                 <div class="form-group">
                     <label class="form-label" for="name">Name *</label>
                     <input class="form-input" type="text" id="name" name="name" required placeholder="John Smith">
@@ -1446,7 +1394,7 @@
 <footer>
     <div class="footer-left">
         <div class="footer-logo">Rapid Reaktor</div>
-        <p class="footer-copy">© 2026 Rapid Reaktor.</p>
+        <p class="footer-copy">© 2024 Rapid Reaktor. Kinetic Defense Systems.</p>
     </div>
     <div class="footer-links">
         <a href="#">Privacy Protocol</a>
@@ -1459,11 +1407,11 @@
 <script>
     // ─── LIVE ACTIVITY ANIMATION ───
     document.addEventListener('DOMContentLoaded', function () {
-        const feed          = document.getElementById('activityFeed');
-        const recentEl      = document.getElementById('recentActions');
-        const totalEl       = document.getElementById('totalActions');
+        const feed      = document.getElementById('activityFeed');
+        const recentEl  = document.getElementById('recentActions');
+        const totalEl   = document.getElementById('totalActions');
 
-        if (!feed) return;
+        if (!feed || !recentEl || !totalEl) return;
 
         const threats = [
             { ip: '45.76.112.34',   list: 'ssh-blocklist' },
@@ -1488,39 +1436,50 @@
             currentCount++;
             totalCount++;
 
-            if (recentEl) { recentEl.style.transform = 'scale(1.12)'; recentEl.textContent = currentCount; }
-            if (totalEl)  { totalEl.style.transform  = 'scale(1.12)'; totalEl.textContent  = totalCount.toLocaleString(); }
+            recentEl.style.transform = 'scale(1.12)';
+            recentEl.textContent = currentCount;
+            totalEl.style.transform = 'scale(1.12)';
+            totalEl.textContent = totalCount.toLocaleString();
+
             setTimeout(() => {
-                if (recentEl) recentEl.style.transform = 'scale(1)';
-                if (totalEl)  totalEl.style.transform  = 'scale(1)';
+                recentEl.style.transform = 'scale(1)';
+                totalEl.style.transform  = 'scale(1)';
             }, 200);
 
-            const row = document.createElement('div');
-            row.className = 'activity-row';
-            row.style.marginTop = '-40px';
-            row.style.opacity = '0';
-            row.style.transition = 'margin-top 0.38s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease';
-            row.innerHTML = `<span class="activity-prefix">+</span> added <span class="activity-ip">${threat.ip}</span> <span class="activity-list">→ ${threat.list}</span><span class="activity-time">just now</span>`;
+            const item = document.createElement('div');
+            item.className = 'activity-item';
+            item.style.animation = 'none';
+            item.innerHTML = `
+                <span><span class="activity-prefix">+</span> added <span class="activity-ip">${threat.ip}</span> <span class="activity-list">→ ${threat.list}</span></span>
+                <span class="activity-time">just now</span>
+            `;
 
-            feed.insertBefore(row, feed.firstChild);
+            const header = feed.querySelector('.feed-header');
+            if (header && header.nextSibling) {
+                feed.insertBefore(item, header.nextSibling);
+            } else {
+                feed.appendChild(item);
+            }
 
-            requestAnimationFrame(() => requestAnimationFrame(() => {
-                row.style.marginTop = '0';
-                row.style.opacity = '1';
-            }));
+            requestAnimationFrame(() => {
+                item.style.animation = 'slideIn 0.35s forwards';
+            });
 
-            setTimeout(() => {
-                const rows = feed.querySelectorAll('.activity-row');
-                if (rows.length > 6) rows[rows.length - 1].remove();
-                updateTimestamps();
-            }, 420);
+            const items = feed.querySelectorAll('.activity-item');
+            if (items.length > 3) {
+                const last = items[items.length - 1];
+                last.style.animation = 'slideOut 0.3s forwards';
+                setTimeout(() => last.remove(), 300);
+            }
+
+            updateTimestamps();
         }
 
         function updateTimestamps() {
-            const rows = feed.querySelectorAll('.activity-row');
-            const times = ['just now', '2s ago', '5s ago', '12s ago', '28s ago', '45s ago'];
-            rows.forEach((row, i) => {
-                const t = row.querySelector('.activity-time');
+            const items = feed.querySelectorAll('.activity-item');
+            const times = ['just now', '2s ago', '5s ago'];
+            items.forEach((item, i) => {
+                const t = item.querySelector('.activity-time');
                 if (t && times[i]) t.textContent = times[i];
             });
         }
@@ -1539,8 +1498,8 @@
                         currentCount = 92;
                         totalCount   = 1847;
                         threatIndex  = 0;
-                        if (recentEl) recentEl.textContent = currentCount;
-                        if (totalEl)  totalEl.textContent  = totalCount.toLocaleString();
+                        recentEl.textContent = currentCount;
+                        totalEl.textContent  = totalCount.toLocaleString();
                         startLoop();
                     }, 3000);
                 }

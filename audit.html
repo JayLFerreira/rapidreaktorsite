@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audit Log Schema | Rapid Reaktor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg:          #080c10;
+            --bg-2:        #0c1118;
+            --bg-3:        #101820;
+            --bg-card:     #192027;
+            --accent:      #00dcff;
+            --accent-dim:  rgba(0, 220, 255, 0.08);
+            --accent-glow: rgba(0, 220, 255, 0.28);
+            --green:       #00d97e;
+            --orange:      #ffaa00;
+            --text:        #bdc9d7;
+            --text-dim:    #566374;
+            --text-bright: #eef2f6;
+            --border:      rgba(0, 220, 255, 0.14);
+            --border-sub:  rgba(255, 255, 255, 0.06);
+            --font-head:   'Space Grotesk', sans-serif;
+            --font-mono:   'JetBrains Mono', monospace;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-head);
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: radial-gradient(circle, rgba(0, 220, 255, 0.032) 1px, transparent 1px);
+            background-size: 28px 28px;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.012) 3px, rgba(0,0,0,0.012) 4px);
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* ─── NAV ─── */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            background: rgba(8, 12, 16, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-sub);
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+        }
+
+        .nav-logo {
+            font-family: var(--font-head);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+            letter-spacing: -0.01em;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            font-family: var(--font-head);
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--text-bright); }
+
+        .nav-deploy {
+            font-family: var(--font-head);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            color: var(--bg);
+            background: var(--accent);
+            border: none;
+            border-radius: 6px;
+            padding: 0.5rem 1.1rem;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+
+        .nav-deploy:hover { opacity: 0.9; transform: scale(0.98); }
+
+        /* ─── LAYOUT ─── */
+        .page-wrapper {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 64px 2rem 0;
+            min-height: 100vh;
+        }
+
+        /* ─── SIDEBAR TOC ─── */
+        .sidebar {
+            padding: 3rem 1.5rem 3rem 0;
+            position: sticky;
+            top: 64px;
+            height: calc(100vh - 64px);
+            overflow-y: auto;
+            border-right: 1px solid var(--border-sub);
+        }
+
+        .sidebar::-webkit-scrollbar { width: 4px; }
+        .sidebar::-webkit-scrollbar-track { background: transparent; }
+        .sidebar::-webkit-scrollbar-thumb { background: var(--border-sub); border-radius: 2px; }
+
+        .toc-label {
+            font-family: var(--font-mono);
+            font-size: 0.58rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-sub);
+        }
+
+        .toc-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.1rem;
+        }
+
+        .toc-list a {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: var(--text-dim);
+            text-decoration: none;
+            padding: 0.4rem 0.75rem;
+            border-left: 2px solid transparent;
+            border-radius: 0 4px 4px 0;
+            transition: color 0.2s, border-color 0.2s, background 0.2s;
+            line-height: 1.4;
+        }
+
+        .toc-list a:hover,
+        .toc-list a.active {
+            color: var(--accent);
+            border-left-color: var(--accent);
+            background: rgba(0, 220, 255, 0.04);
+        }
+
+        .toc-list .toc-num {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            color: var(--text-dim);
+            opacity: 0.6;
+            margin-right: 0.4rem;
+        }
+
+        /* ─── MAIN CONTENT ─── */
+        .main-content {
+            padding: 3rem 0 6rem 3rem;
+        }
+
+        /* ─── HERO ─── */
+        .doc-hero {
+            margin-bottom: 4rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid var(--border-sub);
+        }
+
+        .doc-eyebrow {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .doc-eyebrow::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 6px var(--accent);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .doc-title {
+            font-size: clamp(1.75rem, 3vw, 2.5rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            color: var(--text-bright);
+            line-height: 1.15;
+            margin-bottom: 1rem;
+        }
+
+        .doc-title .hl { color: var(--accent); text-shadow: 0 0 30px rgba(0,220,255,0.4); }
+
+        .doc-sub {
+            font-size: 1rem;
+            color: var(--text-dim);
+            line-height: 1.75;
+            max-width: 600px;
+        }
+
+        /* ─── SECTIONS ─── */
+        .doc-section {
+            margin-bottom: 4rem;
+            padding-bottom: 4rem;
+            border-bottom: 1px solid var(--border-sub);
+            scroll-margin-top: 90px;
+        }
+
+        .doc-section:last-of-type { border-bottom: none; }
+
+        .section-num {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            letter-spacing: 0.2em;
+            color: var(--accent);
+            opacity: 0.7;
+            text-transform: uppercase;
+            margin-bottom: 0.4rem;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--text-bright);
+            margin-bottom: 1.25rem;
+            line-height: 1.2;
+        }
+
+        .section-body {
+            font-size: 0.95rem;
+            color: var(--text);
+            line-height: 1.8;
+        }
+
+        .section-body p { margin-bottom: 1rem; }
+        .section-body p:last-child { margin-bottom: 0; }
+
+        /* ─── THREE QUESTIONS ─── */
+        .questions-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .question-card {
+            background: rgba(25, 32, 39, 0.6);
+            border: 1px solid var(--border-sub);
+            border-radius: 8px;
+            padding: 1.25rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent);
+            opacity: 0.4;
+        }
+
+        .question-num {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            color: var(--accent);
+            letter-spacing: 0.15em;
+            margin-bottom: 0.5rem;
+        }
+
+        .question-text {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-bright);
+        }
+
+        /* ─── TABLE ─── */
+        .schema-table-wrap {
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-sub);
+        }
+
+        .schema-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+
+        .schema-table thead tr {
+            background: rgba(0, 220, 255, 0.08);
+            border-bottom: 2px solid rgba(0, 220, 255, 0.25);
+        }
+
+        .schema-table th {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent);
+            padding: 0.875rem 1.25rem;
+            text-align: left;
+            font-weight: 500;
+        }
+
+        .schema-table td {
+            padding: 0.875rem 1.25rem;
+            border-bottom: 1px solid var(--border-sub);
+            vertical-align: top;
+            line-height: 1.6;
+        }
+
+        .schema-table tbody tr:last-child td { border-bottom: none; }
+
+        .schema-table tbody tr:nth-child(even) { background: rgba(255,255,255,0.015); }
+        .schema-table tbody tr:hover { background: rgba(0,220,255,0.03); }
+
+        .field-name {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--accent);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .field-desc { color: var(--text); font-size: 0.875rem; }
+
+        /* ─── CODE BLOCKS ─── */
+        .code-block {
+            background: #060c10;
+            border: 1px solid var(--border-sub);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.25rem 0;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-block::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0,220,255,0.3), transparent);
+        }
+
+        .code-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-sub);
+        }
+
+        .code-dot { width: 8px; height: 8px; border-radius: 50%; }
+        .code-dot-red { background: #ff5f57; }
+        .code-dot-yellow { background: #febc2e; }
+        .code-dot-green { background: #28c840; }
+
+        .code-label {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-left: auto;
+        }
+
+        .code-block pre {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            line-height: 1.8;
+            white-space: pre;
+        }
+
+        .cf { color: var(--accent); font-weight: 500; }     /* field name / cyan */
+        .cv { color: #a8b8c8; }                              /* value / dim */
+        .ch { color: var(--green); }                         /* highlight green */
+        .co { color: var(--text-dim); }                      /* comment / very dim */
+
+        .code-caption {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            line-height: 1.7;
+            font-style: italic;
+            margin-top: 0.75rem;
+            padding-left: 0.5rem;
+            border-left: 2px solid var(--border-sub);
+        }
+
+        /* ─── INLINE CODE ─── */
+        code {
+            font-family: var(--font-mono);
+            font-size: 0.82em;
+            color: var(--accent);
+            background: rgba(0,220,255,0.07);
+            border: 1px solid rgba(0,220,255,0.15);
+            border-radius: 3px;
+            padding: 0.1em 0.4em;
+        }
+
+        /* ─── EXPORT CARDS ─── */
+        .export-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+            margin: 1.5rem 0;
+        }
+
+        .export-card {
+            background: rgba(25, 32, 39, 0.6);
+            border: 1px solid var(--border-sub);
+            border-radius: 8px;
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .export-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0,220,255,0.2), transparent);
+        }
+
+        .export-method {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+        }
+
+        .export-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-bright);
+            margin-bottom: 0.75rem;
+        }
+
+        .export-desc {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            line-height: 1.7;
+        }
+
+        .api-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(0,220,255,0.08);
+            border: 1px solid rgba(0,220,255,0.2);
+            border-radius: 4px;
+            padding: 0.4rem 0.75rem;
+            margin: 0.75rem 0;
+        }
+
+        .api-method {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--green);
+            letter-spacing: 0.05em;
+        }
+
+        .api-path {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent);
+        }
+
+        /* ─── DATA LIVES ─── */
+        .data-path-block {
+            background: #060c10;
+            border: 1px solid var(--border-sub);
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            margin: 1.25rem 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .data-path-icon {
+            width: 36px;
+            height: 36px;
+            background: rgba(0,220,255,0.08);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: var(--accent);
+            font-size: 1rem;
+        }
+
+        .data-path-text {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .data-path-label {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            color: var(--text-dim);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-top: 0.15rem;
+        }
+
+        .info-pills {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+        }
+
+        .info-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--green);
+            background: rgba(0, 217, 126, 0.08);
+            border: 1px solid rgba(0, 217, 126, 0.2);
+            border-radius: 3px;
+            padding: 0.3rem 0.65rem;
+        }
+
+        .info-pill::before {
+            content: '✓';
+            font-size: 0.7rem;
+        }
+
+        /* ─── SCENARIO BLOCK ─── */
+        .scenario-banner {
+            background: rgba(0, 220, 255, 0.05);
+            border: 1px solid rgba(0, 220, 255, 0.15);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 1.25rem;
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        .scenario-banner strong {
+            color: var(--accent);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 0.4rem;
+        }
+
+        .resolution-block {
+            background: rgba(0, 217, 126, 0.05);
+            border: 1px solid rgba(0, 217, 126, 0.2);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-top: 1.25rem;
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.75;
+        }
+
+        .resolution-block strong {
+            color: var(--green);
+        }
+
+        /* ─── LIMITATIONS ─── */
+        .limitations-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+            margin-top: 1.25rem;
+        }
+
+        .limit-card {
+            background: rgba(255, 170, 0, 0.04);
+            border: 1px solid rgba(255, 170, 0, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .limit-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--orange), transparent);
+            border-radius: 8px 8px 0 0;
+        }
+
+        .limit-label {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--orange);
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .limit-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-bright);
+            margin-bottom: 0.6rem;
+        }
+
+        .limit-desc {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            line-height: 1.7;
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            background: var(--bg);
+            border-top: 1px solid var(--border-sub);
+            padding: 2.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            max-width: 100%;
+        }
+
+        .footer-logo {
+            font-family: var(--font-head);
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-bright);
+            letter-spacing: -0.01em;
+            margin-bottom: 0.35rem;
+        }
+
+        .footer-copy {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            color: var(--text-dim);
+            opacity: 0.45;
+            letter-spacing: 0.04em;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            color: var(--text-dim);
+            text-decoration: none;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover { color: var(--accent); }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 900px) {
+            .page-wrapper { grid-template-columns: 1fr; }
+            .sidebar { display: none; }
+            .main-content { padding: 2rem 0; }
+            .questions-grid { grid-template-columns: 1fr; }
+            .export-grid { grid-template-columns: 1fr; }
+            .limitations-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="index.html" class="nav-logo">Rapid Reaktor</a>
+    <div class="nav-links">
+        <a href="index.html#features">Features</a>
+        <a href="index.html#how-it-works">How it Works</a>
+        <a href="#">Docs</a>
+    </div>
+    <button class="nav-deploy">Deploy Shield</button>
+</nav>
+
+<div class="page-wrapper">
+
+    <!-- SIDEBAR TOC -->
+    <aside class="sidebar">
+        <div class="toc-label">On This Page</div>
+        <ul class="toc-list">
+            <li><a href="#why" id="toc-why"><span class="toc-num">01</span> Why This Exists</a></li>
+            <li><a href="#schema" id="toc-schema"><span class="toc-num">02</span> What Gets Recorded</a></li>
+            <li><a href="#sample" id="toc-sample"><span class="toc-num">03</span> Sample Log Entry</a></li>
+            <li><a href="#ttl" id="toc-ttl"><span class="toc-num">04</span> TTL Expiration Logging</a></li>
+            <li><a href="#export" id="toc-export"><span class="toc-num">05</span> Exporting Your Logs</a></li>
+            <li><a href="#storage" id="toc-storage"><span class="toc-num">06</span> Where the Data Lives</a></li>
+            <li><a href="#incident" id="toc-incident"><span class="toc-num">07</span> Incident Reconstruction</a></li>
+            <li><a href="#limitations" id="toc-limitations"><span class="toc-num">08</span> Known Limitations</a></li>
+        </ul>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main-content">
+
+        <!-- HERO -->
+        <div class="doc-hero">
+            <div class="doc-eyebrow">Audit Log Schema</div>
+            <h1 class="doc-title">What Rapid Reaktor Logs<br><span class="hl">And Why It Matters</span></h1>
+            <p class="doc-sub">Every automated block is recorded in full, from the raw syslog message that triggered it to the moment the IP expires off your blocklist. Nothing happens silently.</p>
+        </div>
+
+        <!-- SECTION 1 -->
+        <section class="doc-section" id="why">
+            <div class="section-num">01 / Why This Exists</div>
+            <h2 class="section-title">Three Questions You Need to Answer</h2>
+            <div class="section-body">
+                <p>When a system makes automated firewall decisions, you need to be able to answer three questions at any time:</p>
+            </div>
+
+            <div class="questions-grid">
+                <div class="question-card">
+                    <div class="question-num">01</div>
+                    <div class="question-text">What got blocked?</div>
+                </div>
+                <div class="question-card">
+                    <div class="question-num">02</div>
+                    <div class="question-text">Why did it get blocked?</div>
+                </div>
+                <div class="question-card">
+                    <div class="question-num">03</div>
+                    <div class="question-text">What happened to it after?</div>
+                </div>
+            </div>
+
+            <div class="section-body">
+                <p>Rapid Reaktor logs the complete answer to all three, automatically, for every action it takes. No logging setup required. No external service. Just a local database on your own infrastructure that captures the full lifecycle of every block.</p>
+            </div>
+        </section>
+
+        <!-- SECTION 2 -->
+        <section class="doc-section" id="schema">
+            <div class="section-num">02 / Schema</div>
+            <h2 class="section-title">What Gets Recorded</h2>
+            <div class="section-body">
+                <p>Every block event is written to the <code>triggered_actions</code> table in Rapid Reaktor's SQLite database. Here's exactly what's captured:</p>
+            </div>
+
+            <div class="schema-table-wrap">
+                <table class="schema-table">
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>What It Contains</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="field-name">id</span></td>
+                            <td class="field-desc">Auto-incrementing event ID</td>
+                        </tr>
+                        <tr>
+                            <td><span class="field-name">rule_name</span></td>
+                            <td class="field-desc">The rule that matched and triggered the block</td>
+                        </tr>
+                        <tr>
+                            <td><span class="field-name">extracted_ip</span></td>
+                            <td class="field-desc">The attacker IP that was acted on</td>
+                        </tr>
+                        <tr>
+                            <td><span class="field-name">action_type</span></td>
+                            <td class="field-desc"><code>edl</code> for a blocklist update, <code>edl_expiration</code> for a TTL removal</td>
+                        </tr>
+                        <tr>
+                            <td><span class="field-name">action_result</span></td>
+                            <td class="field-desc">Plain-English summary of the action taken, including which EDL and TTL applied</td>
+                        </tr>
+                        <tr>
+                            <td><span class="field-name">syslog_message</span></td>
+                            <td class="field-desc">The complete, unmodified syslog message that triggered the rule</td>
+                        </tr>
+                        <tr>
+                            <td><span class="field-name">triggered_at</span></td>
+                            <td class="field-desc">Exact timestamp of when the action fired</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="section-body">
+                <p>The full raw syslog message is stored. Not a parsed summary. The actual message, character for character, exactly as Rapid Reaktor received it.</p>
+            </div>
+        </section>
+
+        <!-- SECTION 3 -->
+        <section class="doc-section" id="sample">
+            <div class="section-num">03 / Sample Entry</div>
+            <h2 class="section-title">What a Real Block Looks Like</h2>
+            <div class="section-body">
+                <p>This is what a real block event looks like in the database:</p>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dot code-dot-red"></div>
+                    <div class="code-dot code-dot-yellow"></div>
+                    <div class="code-dot code-dot-green"></div>
+                    <span class="code-label">triggered_actions · row 42</span>
+                </div>
+                <pre><span class="cf">id</span>              <span class="cv">42</span>
+<span class="cf">rule_name</span>       <span class="ch">SSH Brute Force Block</span>
+<span class="cf">extracted_ip</span>    <span class="ch">185.220.101.47</span>
+<span class="cf">action_type</span>     <span class="cv">edl</span>
+<span class="cf">action_result</span>   <span class="cv">Added 185.220.101.47 to blocklist-ssh (TTL: 24 hours)</span>
+<span class="cf">syslog_message</span>  <span class="co">Jan 15 03:42:17 fw01 sshd[2341]: Failed password for
+                root from 185.220.101.47 port 54812 ssh2</span>
+<span class="cf">triggered_at</span>    <span class="cv">2025-01-15 03:42:17</span></pre>
+            </div>
+
+            <p class="code-caption">You can see exactly which rule fired, which IP was blocked, which EDL it landed on, how long it'll be blocked for, and the raw syslog line that caused all of it. That's your full audit trail in a single row.</p>
+        </section>
+
+        <!-- SECTION 4 -->
+        <section class="doc-section" id="ttl">
+            <div class="section-num">04 / TTL Expiration</div>
+            <h2 class="section-title">Expiration Is Logged Too</h2>
+            <div class="section-body">
+                <p>When a blocked IP's TTL expires, Rapid Reaktor doesn't just quietly remove it. It writes a second log entry:</p>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dot code-dot-red"></div>
+                    <div class="code-dot code-dot-yellow"></div>
+                    <div class="code-dot code-dot-green"></div>
+                    <span class="code-label">triggered_actions · expiration event</span>
+                </div>
+                <pre><span class="cf">action_type</span>     <span class="cv">edl_expiration</span>
+<span class="cf">action_result</span>   <span class="cv">Removed 185.220.101.47 from blocklist-ssh</span>
+<span class="cf">triggered_at</span>    <span class="cv">2025-01-16 03:42:17</span></pre>
+            </div>
+
+            <div class="section-body">
+                <p>Every IP has two entries: when it was blocked, and when it was released. You have the complete lifecycle of every address that ever touched your blocklist.</p>
+                <p>The expiration check runs every 15 minutes in the background.</p>
+            </div>
+        </section>
+
+        <!-- SECTION 5 -->
+        <section class="doc-section" id="export">
+            <div class="section-num">05 / Export</div>
+            <h2 class="section-title">Exporting Your Logs</h2>
+
+            <div class="export-grid">
+                <div class="export-card">
+                    <div class="export-method">Method 01 · UI</div>
+                    <div class="export-title">Export from the Dashboard</div>
+                    <div class="export-desc">Go to the Activity Log page and hit <strong>Export CSV</strong>. This downloads <code>activity_log.csv</code>, the full <code>triggered_actions</code> table, every row, every field.</div>
+                </div>
+                <div class="export-card">
+                    <div class="export-method">Method 02 · API</div>
+                    <div class="export-title">Direct API Call</div>
+                    <div class="api-pill">
+                        <span class="api-method">GET</span>
+                        <span class="api-path">/api/actions/export</span>
+                    </div>
+                    <div class="export-desc">Returns the full table as a CSV download. Same data as the UI export.</div>
+                </div>
+            </div>
+
+            <div class="section-body">
+                <p>The CSV export is always the full table. Filtering by date, IP, or rule is available in the Activity Log UI view, but those filters don't carry over to the export. If you need a filtered export, pull the CSV and filter in Excel, or query the database directly.</p>
+            </div>
+        </section>
+
+        <!-- SECTION 6 -->
+        <section class="doc-section" id="storage">
+            <div class="section-num">06 / Storage</div>
+            <h2 class="section-title">Where the Data Lives</h2>
+
+            <div class="data-path-block">
+                <div class="data-path-icon">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 4h12v8a2 2 0 01-2 2H4a2 2 0 01-2-2V4z" stroke="currentColor" stroke-width="1.4"/><path d="M2 4l2-2h8l2 2" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+                </div>
+                <div>
+                    <div class="data-path-text">./data/logreactor.db</div>
+                    <div class="data-path-label">SQLite · volume-mounted · host filesystem</div>
+                </div>
+            </div>
+
+            <div class="info-pills">
+                <span class="info-pill">No cloud sync</span>
+                <span class="info-pill">No vendor access</span>
+                <span class="info-pill">No third-party dependency</span>
+                <span class="info-pill">Standard SQLite tooling</span>
+            </div>
+
+            <div class="section-body">
+                <p>The <code>./data</code> directory is volume-mounted, so the file persists on your host machine outside the container. Your log data never leaves your infrastructure.</p>
+                <p><strong style="color: var(--text-bright);">Retention:</strong> The <code>triggered_actions</code> table grows indefinitely. There is no built-in pruning or rotation. Managing retention is up to you. You can delete rows directly, archive old entries, or swap in a fresh database file. Because it's SQLite, any standard database tool works.</p>
+            </div>
+        </section>
+
+        <!-- SECTION 7 -->
+        <section class="doc-section" id="incident">
+            <div class="section-num">07 / Real Example</div>
+            <h2 class="section-title">Incident Reconstruction</h2>
+
+            <div class="scenario-banner">
+                <strong>Scenario</strong>
+                At 9am, an engineer reports they can't reach an external vendor IP. No one knows why.
+            </div>
+
+            <div class="section-body">
+                <p>You open the Activity Log and search the IP. You see:</p>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dot code-dot-red"></div>
+                    <div class="code-dot code-dot-yellow"></div>
+                    <div class="code-dot code-dot-green"></div>
+                    <span class="code-label">Activity Log · search result</span>
+                </div>
+                <pre><span class="cf">rule_name</span>       <span class="ch">SSH Brute Force Block</span>
+<span class="cf">extracted_ip</span>    <span class="ch">185.220.101.47</span>
+<span class="cf">action_result</span>   <span class="cv">Added 185.220.101.47 to blocklist-ssh (TTL: 24 hours)</span>
+<span class="cf">syslog_message</span>  <span class="co">Jan 15 03:42:17 fw01 sshd[2341]: Failed password for
+                root from 185.220.101.47 port 54812 ssh2</span>
+<span class="cf">triggered_at</span>    <span class="cv">2025-01-15 03:42:17</span></pre>
+            </div>
+
+            <div class="resolution-block">
+                <strong>Resolved in under 30 seconds.</strong> The IP was auto-blocked at 3:42am because it triggered the SSH brute force rule. The raw syslog proves it. The TTL tells you it'll expire on its own at 3:42am tonight, or you can remove it manually right now.<br><br>
+                No digging through firewall logs. No guessing. No black box.
+            </div>
+        </section>
+
+        <!-- SECTION 8 -->
+        <section class="doc-section" id="limitations">
+            <div class="section-num">08 / Limitations</div>
+            <h2 class="section-title">Two Honest Limitations</h2>
+            <div class="section-body">
+                <p>These gaps are worth knowing before you rely on the audit log for compliance or forensics.</p>
+            </div>
+
+            <div class="limitations-grid">
+                <div class="limit-card">
+                    <div class="limit-label">⚠ Limitation 01</div>
+                    <div class="limit-title">Failed Extractions Aren't Logged</div>
+                    <div class="limit-desc">If Rapid Reaktor receives an alert that matches a rule but can't extract a valid IP, no entry is written. Only successful blocks appear in <code style="color: var(--orange); background: rgba(255,170,0,0.08); border-color: rgba(255,170,0,0.2);">triggered_actions</code>.</div>
+                </div>
+                <div class="limit-card">
+                    <div class="limit-label">⚠ Limitation 02</div>
+                    <div class="limit-title">Threshold Detail Isn't Recorded</div>
+                    <div class="limit-desc">The log captures which rule fired and what it did, not the specific match count that pushed it over the threshold (e.g. "3rd hit in 60 seconds"). The rule name tells you what happened; the threshold logic is in your rule config, not the log.</div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<footer>
+    <div>
+        <div class="footer-logo">Rapid Reaktor</div>
+        <p class="footer-copy">© 2026 Rapid Reaktor.</p>
+    </div>
+    <div class="footer-links">
+        <a href="#">Privacy Protocol</a>
+        <a href="#">Terms of Engagement</a>
+        <a href="#">System Status</a>
+        <a href="#">Security Audit</a>
+    </div>
+</footer>
+
+<script>
+    // Sticky TOC highlight on scroll
+    const sections = document.querySelectorAll('.doc-section');
+    const tocLinks = document.querySelectorAll('.toc-list a');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                tocLinks.forEach(l => l.classList.remove('active'));
+                const active = document.querySelector(`#toc-${entry.target.id}`);
+                if (active) active.classList.add('active');
+            }
+        });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+
+    sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
