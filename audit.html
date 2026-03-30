@@ -66,12 +66,23 @@
         }
 
         .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+        .nav-logo img {
+            height: 32px;
+            width: auto;
+        }
+        .nav-logo-text {
             font-family: var(--font-head);
             font-size: 1.1rem;
             font-weight: 700;
             color: var(--accent);
-            text-decoration: none;
-            letter-spacing: -0.01em;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            text-shadow: 0 0 30px rgba(0, 220, 255, 0.4), 0 0 60px rgba(0, 220, 255, 0.15);
         }
 
         .nav-links {
@@ -730,7 +741,10 @@
 <body>
 
 <nav>
-    <a href="index.html" class="nav-logo">Rapid Reaktor</a>
+    <a href="index.html" class="nav-logo">
+        <img src="logo3.png" alt="Rapid Reaktor">
+        <span class="nav-logo-text">Rapid Reaktor</span>
+    </a>
     <div class="nav-links">
         <a href="index.html#features">Features</a>
         <a href="index.html#how-it-works">How it Works</a>
