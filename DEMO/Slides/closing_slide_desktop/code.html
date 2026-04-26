@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "secondary-fixed": "#08fdea",
+            "on-error": "#690005",
+            "inverse-primary": "#00696e",
+            "background": "#131313",
+            "inverse-on-surface": "#313030",
+            "tertiary-fixed-dim": "#d1bcff",
+            "tertiary-fixed": "#e9ddff",
+            "on-primary": "#003739",
+            "surface-dim": "#131313",
+            "surface-container-highest": "#353534",
+            "surface-container-low": "#1c1b1b",
+            "primary-container": "#00f5ff",
+            "on-background": "#e5e2e1",
+            "on-tertiary-container": "#751fff",
+            "on-primary-container": "#006c71",
+            "tertiary": "#fef8ff",
+            "secondary-fixed-dim": "#00decd",
+            "primary-fixed-dim": "#00dce5",
+            "surface-bright": "#393939",
+            "on-tertiary-fixed": "#23005b",
+            "on-secondary-fixed-variant": "#005049",
+            "inverse-surface": "#e5e2e1",
+            "surface-container-lowest": "#0e0e0e",
+            "outline": "#849495",
+            "on-secondary-fixed": "#00201d",
+            "on-secondary": "#003732",
+            "surface-variant": "#353534",
+            "secondary-container": "#00fae7",
+            "surface-container-high": "#2a2a2a",
+            "on-tertiary": "#3c0090",
+            "on-primary-fixed-variant": "#004f53",
+            "surface-tint": "#00dce5",
+            "primary": "#e9feff",
+            "on-primary-fixed": "#002021",
+            "on-secondary-container": "#006f66",
+            "tertiary-container": "#e5d7ff",
+            "surface-container": "#201f1f",
+            "error-container": "#93000a",
+            "primary-fixed": "#63f7ff",
+            "outline-variant": "#3a494a",
+            "secondary": "#f2fffc",
+            "error": "#ffb4ab",
+            "on-surface": "#e5e2e1",
+            "on-tertiary-fixed-variant": "#5700c9",
+            "on-error-container": "#ffdad6",
+            "surface": "#131313",
+            "on-surface-variant": "#b9caca"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "margin": "32px",
+            "sm": "16px",
+            "gutter": "20px",
+            "base": "4px",
+            "lg": "32px",
+            "md": "24px",
+            "xs": "8px",
+            "xl": "48px"
+          },
+          "fontFamily": {
+            "mono-data": ["Space Grotesk"],
+            "h3": ["Inter"],
+            "body-lg": ["Inter"],
+            "body-md": ["Inter"],
+            "h2": ["Inter"],
+            "mono-label": ["Space Grotesk"],
+            "h1": ["Inter"],
+            "body-sm": ["Inter"]
+          },
+          "fontSize": {
+            "mono-data": ["13px", {"lineHeight": "1.4", "fontWeight": "400"}],
+            "h3": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+            "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+            "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+            "h2": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+            "mono-label": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "500"}],
+            "h1": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+            "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .glass-panel {
+      background: rgba(18, 18, 18, 0.6);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(0, 245, 255, 0.1);
+    }
+    .reaktor-pulse {
+      box-shadow: 0 0 0 0 rgba(0, 245, 255, 0.4);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(0, 245, 255, 0.4); }
+      70% { box-shadow: 0 0 0 10px rgba(0, 245, 255, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(0, 245, 255, 0); }
+    }
+    .grid-bg {
+      background-image: radial-gradient(rgba(0, 245, 255, 0.05) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background font-body-md overflow-hidden antialiased grid-bg h-screen w-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-8 h-16 fixed top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-cyan-500/15">
+<div class="flex items-center gap-4">
+<span class="text-xl font-bold tracking-tighter text-cyan-400">CYBER COMMAND</span>
+<div class="h-4 w-px bg-cyan-500/30"></div>
+<nav class="flex gap-6 items-center">
+<span class="font-['Inter'] uppercase tracking-widest text-xs font-semibold text-slate-400 hover:text-cyan-300 transition-colors cursor-pointer">Operations</span>
+<span class="font-['Inter'] uppercase tracking-widest text-xs font-semibold text-slate-400 hover:text-cyan-300 transition-colors cursor-pointer">Intelligence</span>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-cyan-500/10 transition-colors rounded">
+<span class="material-symbols-outlined text-cyan-400 text-xl" data-icon="help">help</span>
+</button>
+<button class="p-2 hover:bg-cyan-500/10 transition-colors rounded">
+<span class="material-symbols-outlined text-cyan-400 text-xl" data-icon="settings">settings</span>
+</button>
+</div>
+</header>
+<!-- SideNavBar Suppression (Task-Focused Screen) -->
+<!-- Main Canvas (16:9 Aspect Ratio Focus) -->
+<main class="flex-1 flex items-center justify-center p-8 mt-16 mb-10">
+<div class="aspect-video w-full max-w-7xl glass-panel relative overflow-hidden flex flex-col justify-center items-center px-12 text-center border-cyan-500/20 shadow-2xl">
+<!-- Decorative Background Elements -->
+<div class="absolute inset-0 opacity-10 pointer-events-none">
+<img class="w-full h-full object-cover grayscale contrast-125 mix-blend-screen" data-alt="Technical digital server room with circuit board patterns and glowing cyan data streams in high contrast tech aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8oHoxvnI1eGkRpNX96m0aMW6z395-XpSqk9DkluEScCiq9sVUoGkuoaDdVUFb3XhQ-DPhTDIbMenV2C0JN-8ZSj28wQkUC7Bqk8Gz90KCqj5TzojHAOmWEVKwxI2p6X-7BL75nQ5cm6hG51n6gAbolJNNa5_tTJoxvVN8RWo4ZT1cJ3WwxHi52C3HMPK1zrdxPnC3G540__6kO_ibkJs1IPGalBnIAYw8vs7BBNgCRpmqOwyjE51ZBXkaFRwHBOiFFfrg-_i7ZxgJ"/>
+</div>
+<!-- Sub-headline/Context -->
+<div class="mb-6 flex items-center gap-3">
+<div class="h-[1px] w-12 bg-cyan-500/40"></div>
+<span class="font-mono-label text-mono-label text-primary-fixed uppercase tracking-[0.2em]">Deployment Phase: Complete</span>
+<div class="h-[1px] w-12 bg-cyan-500/40"></div>
+</div>
+<!-- Main Heading -->
+<h1 class="font-h1 text-h1 text-primary leading-tight max-w-4xl mb-8">
+        From a <span class="text-cyan-400 italic">jerry-rigged script</span> to a production platform.
+      </h1>
+<!-- CTA Paragraph -->
+<p class="font-h2 text-h2 text-on-surface-variant max-w-3xl mb-12 font-light">
+        Rapid Reaktor — because the next attack <span class="text-secondary-fixed-dim font-bold underline decoration-cyan-500/30 underline-offset-8">won't wait</span>.
+      </p>
+<!-- Action Area -->
+<div class="flex flex-col items-center gap-8">
+<button class="group relative px-12 py-5 bg-primary-container text-on-primary-container font-mono-label text-mono-label uppercase tracking-widest overflow-hidden transition-all hover:scale-105 active:scale-95">
+<span class="relative z-10 flex items-center gap-2 font-bold">
+            Initialize Defense Protocol
+            <span class="material-symbols-outlined" data-icon="bolt">bolt</span>
+</span>
+<div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+</button>
+<!-- Status Indicators -->
+<div class="flex gap-12">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-cyan-400 reaktor-pulse"></div>
+<span class="font-mono-data text-mono-data text-slate-500">SYSTEMS ARMED</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-cyan-400 text-sm" data-icon="verified_user">verified_user</span>
+<span class="font-mono-data text-mono-data text-slate-500">ENCRYPTION ACTIVE</span>
+</div>
+</div>
+</div>
+<!-- Tech Detail Corners -->
+<div class="absolute top-8 left-8 flex flex-col items-start">
+<span class="font-mono-data text-[10px] text-cyan-500/40 tracking-tighter">NODE_ID: 8821-RX</span>
+<span class="font-mono-data text-[10px] text-cyan-500/40 tracking-tighter">LATENCY: 0.04ms</span>
+</div>
+<div class="absolute bottom-8 right-8 text-right">
+<span class="font-mono-data text-[10px] text-cyan-500/40 tracking-tighter">v.4.0.2-PRODUCTION</span>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="fixed bottom-0 left-0 w-full z-50 flex justify-between items-center px-8 py-2 h-10 bg-slate-950/90 border-t border-cyan-500/5">
+<div class="flex gap-6">
+<span class="font-['Inter'] text-[10px] tracking-widest uppercase text-slate-600 hover:text-cyan-300 transition-colors cursor-pointer">SLIDE 04 / 12</span>
+<span class="font-['Inter'] text-[10px] tracking-widest uppercase text-slate-600 hover:text-cyan-300 transition-colors cursor-pointer">RESTRICTED ACCESS</span>
+</div>
+<span class="font-['Inter'] text-[10px] tracking-widest uppercase text-cyan-500/50">© 2024 REAKTOR SECURITY</span>
+</footer>
+</body></html>
