@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rapid Reaktor — Sales Hub</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400,0..1&display=swap" rel="stylesheet"/>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          brand:      '#006970',
+          'brand-lt': '#00919a',
+          'brand-bg': '#e8f6f7',
+          ink:        '#0d1f22',
+          muted:      '#4a6366',
+          rule:       '#bdc9ca',
+        },
+        fontFamily: {
+          display: ['Rajdhani', 'sans-serif'],
+          body:    ['Inter', 'sans-serif'],
+          mono:    ['"JetBrains Mono"', 'monospace'],
+          grotesk: ['"Space Grotesk"', 'sans-serif'],
+        },
+      },
+    },
+  }
+</script>
+<style>
+  html, body { height: 100%; overflow: hidden; }
+
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    vertical-align: middle;
+  }
+
+  .pamphlet-clip {
+    width: 360px;
+    height: 466px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .pamphlet-clip iframe {
+    width: 816px;
+    height: 1056px;
+    transform: scale(0.441);
+    transform-origin: top left;
+    pointer-events: none;
+    border: none;
+    display: block;
+  }
+
+  .video-container {
+    background: #0d1f22;
+    overflow: hidden;
+  }
+
+  .video-container video {
+    display: block;
+    width: 100%;
+  }
+
+  .gradient-bar {
+    height: 3px;
+    background: linear-gradient(to right, #006970, #00919a, #10b981);
+  }
+</style>
+</head>
+<body class="bg-gray-100 font-body text-ink flex flex-col" style="height:100vh;">
+
+  <!-- HEADER -->
+  <header class="bg-ink flex items-center justify-between px-8 py-3 flex-shrink-0">
+    <img src="logo3.png" alt="Rapid Reaktor" class="h-8 w-auto">
+    <div class="flex items-center gap-4">
+      <h1 class="font-display text-2xl font-bold text-white tracking-wide">Sales Hub</h1>
+      <span class="bg-brand text-white font-mono text-[8px] uppercase tracking-[0.18em] px-3 py-1 font-semibold">Internal Use Only</span>
+    </div>
+  </header>
+
+  <div class="gradient-bar flex-shrink-0"></div>
+
+  <!-- BODY -->
+  <div class="flex flex-1 overflow-hidden">
+
+    <!-- LEFT SIDEBAR -->
+    <aside class="w-[400px] flex-shrink-0 bg-white border-r border-rule flex flex-col overflow-hidden">
+
+      <div class="px-5 pt-5 pb-3 flex-shrink-0">
+        <p class="font-mono text-[9px] text-brand uppercase tracking-[0.25em] mb-3">Client Pamphlet</p>
+      </div>
+
+      <!-- Pamphlet preview -->
+      <div class="flex-1 overflow-y-auto px-5 pb-4">
+        <div class="pamphlet-clip border border-rule shadow-sm">
+          <iframe src="pamphlet.html" title="Rapid Reaktor Pamphlet" scrolling="no"></iframe>
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="px-5 py-4 border-t border-rule flex gap-3 flex-shrink-0">
+        <button
+          onclick="var w = window.open('pamphlet.html'); w.onload = function(){ w.print(); };"
+          class="flex-1 flex items-center justify-center gap-2 bg-brand hover:bg-brand-lt text-white py-2.5 font-grotesk text-[9px] font-bold uppercase tracking-widest transition-colors">
+          <span class="material-symbols-outlined !text-sm">print</span>
+          Print Pamphlet
+        </button>
+        <button
+          onclick="window.open('pamphlet.html', '_blank');"
+          class="flex-1 flex items-center justify-center gap-2 border border-ink hover:bg-ink hover:text-white text-ink py-2.5 font-grotesk text-[9px] font-bold uppercase tracking-widest transition-colors">
+          <span class="material-symbols-outlined !text-sm">open_in_new</span>
+          View Full
+        </button>
+      </div>
+
+    </aside>
+
+    <!-- RIGHT MAIN -->
+    <main class="flex-1 overflow-y-auto bg-gray-50 p-8 flex flex-col gap-8">
+
+      <!-- DEMO VIDEO -->
+      <section>
+        <p class="font-mono text-[9px] text-brand uppercase tracking-[0.25em] mb-1">Product Demo</p>
+        <h2 class="font-display text-3xl font-bold text-ink mb-1">See Rapid Reaktor in Action</h2>
+        <p class="font-body text-sm text-muted leading-relaxed mb-4">
+          Watch how Rapid Reaktor detects an attack pattern, extracts the IP, and pushes a block to every firewall in under a second.
+        </p>
+        <div class="video-container shadow-lg">
+          <div class="gradient-bar"></div>
+          <video controls preload="metadata">
+            <source src="demovideo.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </section>
+
+      <!-- TALKING POINTS -->
+      <section>
+        <p class="font-mono text-[9px] text-brand uppercase tracking-[0.25em] mb-4">Talking Points</p>
+        <div class="grid grid-cols-2 gap-4">
+
+          <div class="bg-white border border-rule p-4 flex flex-col gap-2">
+            <div class="flex items-center gap-2">
+              <div class="w-6 h-6 bg-brand flex items-center justify-center flex-shrink-0">
+                <span class="material-symbols-outlined text-white !text-sm">groups</span>
+              </div>
+              <span class="font-grotesk font-bold text-[11px] text-ink uppercase tracking-wide">The MSSP Angle</span>
+            </div>
+            <p class="font-body text-[12px] text-muted leading-relaxed">
+              Managing Palo Alto firewalls for multiple clients? One client gets hit, Rapid Reaktor propagates the block across every client environment automatically. Massive time savings at scale.
+            </p>
+          </div>
+
+          <div class="bg-white border border-rule p-4 flex flex-col gap-2">
+            <div class="flex items-center gap-2">
+              <div class="w-6 h-6 bg-brand flex items-center justify-center flex-shrink-0">
+                <span class="material-symbols-outlined text-white !text-sm">lan</span>
+              </div>
+              <span class="font-grotesk font-bold text-[11px] text-ink uppercase tracking-wide">Multi-Site Enterprises</span>
+            </div>
+            <p class="font-body text-[12px] text-muted leading-relaxed">
+              Ten offices, ten firewalls. An attack hits one location. Rapid Reaktor updates all ten simultaneously. No calls, no tickets, no waiting.
+            </p>
+          </div>
+
+          <div class="bg-white border border-rule p-4 flex flex-col gap-2">
+            <div class="flex items-center gap-2">
+              <div class="w-6 h-6 bg-brand flex items-center justify-center flex-shrink-0">
+                <span class="material-symbols-outlined text-white !text-sm">vpn_lock</span>
+              </div>
+              <span class="font-grotesk font-bold text-[11px] text-ink uppercase tracking-wide">VPN Credential Stuffing</span>
+            </div>
+            <p class="font-body text-[12px] text-muted leading-relaxed">
+              Attacker hammers GlobalProtect with a username list to lock out executives. Rapid Reaktor detects the pattern and blocks the IP before accounts go down.
+            </p>
+          </div>
+
+          <div class="bg-white border border-rule p-4 flex flex-col gap-2">
+            <div class="flex items-center gap-2">
+              <div class="w-6 h-6 bg-brand flex items-center justify-center flex-shrink-0">
+                <span class="material-symbols-outlined text-white !text-sm">radar</span>
+              </div>
+              <span class="font-grotesk font-bold text-[11px] text-ink uppercase tracking-wide">Ransomware Precursor Recon</span>
+            </div>
+            <p class="font-body text-[12px] text-muted leading-relaxed">
+              Attackers scan and probe before deploying ransomware. Rapid Reaktor catches recon in firewall logs and blocks the IP during that phase, before it escalates.
+            </p>
+          </div>
+
+          <div class="bg-white border border-rule p-4 flex flex-col gap-2">
+            <div class="flex items-center gap-2">
+              <div class="w-6 h-6 bg-brand flex items-center justify-center flex-shrink-0">
+                <span class="material-symbols-outlined text-white !text-sm">smart_toy</span>
+              </div>
+              <span class="font-grotesk font-bold text-[11px] text-ink uppercase tracking-wide">Zero Human Dependency</span>
+            </div>
+            <p class="font-body text-[12px] text-muted leading-relaxed">
+              No analyst needs to be paged. No ticket needs to be opened. The entire response chain runs without anyone watching.
+            </p>
+          </div>
+
+          <div class="bg-white border border-rule p-4 flex flex-col gap-2">
+            <div class="flex items-center gap-2">
+              <div class="w-6 h-6 bg-brand flex items-center justify-center flex-shrink-0">
+                <span class="material-symbols-outlined text-white !text-sm">deployed_code</span>
+              </div>
+              <span class="font-grotesk font-bold text-[11px] text-ink uppercase tracking-wide">Docker Deployable</span>
+            </div>
+            <p class="font-body text-[12px] text-muted leading-relaxed">
+              Spins up with a single <span class="font-mono text-[11px] bg-brand-bg border border-brand/20 px-1 text-brand">docker run</span> command. No agent installs, no infrastructure changes. Prospects can be running it same day.
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+</body>
+</html>
