@@ -773,6 +773,13 @@
             margin-bottom: 1.25rem;
         }
 
+        .feat-row-4 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+            margin-bottom: 1.25rem;
+        }
+
         .feat-row-3 { margin-bottom: 1.25rem; }
 
         .feature-card {
@@ -866,6 +873,15 @@
             font-size: 0.875rem;
             color: var(--text-dim);
             line-height: 1.7;
+        }
+
+        .feature-desc code {
+            font-family: var(--font-mono, monospace);
+            font-size: 0.85em;
+            color: var(--accent);
+            background: rgba(0, 220, 255, 0.08);
+            padding: 0.1em 0.35em;
+            border-radius: 4px;
         }
 
         .feature-tag {
@@ -1170,7 +1186,7 @@
             .footer      { flex-direction: column; gap: 1.5rem; align-items: flex-start; }
             .footer-links { flex-wrap: wrap; gap: 1rem; }
             .nav-links   { display: none; }
-            .feat-row-1, .feat-row-2 { grid-template-columns: 1fr; }
+            .feat-row-1, .feat-row-2, .feat-row-4 { grid-template-columns: 1fr; }
             .feature-card--wide { flex-direction: column; align-items: flex-start; }
             .integrated-section { grid-template-columns: 1fr; }
             .features-title { font-size: 2rem; }
@@ -1395,14 +1411,14 @@
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><line x1="10" y1="2" x2="10" y2="18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="2" y1="10" x2="18" y2="10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="4.1" y1="4.1" x2="15.9" y2="15.9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="15.9" y1="4.1" x2="4.1" y2="15.9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
                 </div>
                 <div class="feature-title">Auto-Extract IPs</div>
-                <p class="feature-desc">Rapid Reaktor pulls the right IP from raw syslog output, even in NAT and proxy environments where the attacker's real address is buried. No per-rule regex tuning. No manual cleanup. It finds the IP that matters and acts on it.</p>
+                <p class="feature-desc">Rapid Reaktor parses raw syslog and extracts the attacker IP, not whatever address happens to sit first in the line. NAT gateways and reverse proxies bury the real source behind a chain of other addresses, and most tooling either blocks the wrong one or needs a hand-tuned regex per alert type. Rapid Reaktor resolves it correctly out of the box. No per-rule tuning. No manual cleanup.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2L2 6l8 4 8-4-8-4z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M2 10l8 4 8-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 14l8 4 8-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </div>
                 <div class="feature-title">Dynamic EDL Management</div>
-                <p class="feature-desc">Rapid Reaktor hosts your EDL directly. It's the authoritative blocklist server your Palo Alto firewall already points at. When an IP gets added, your firewall picks it up on the next poll with zero extra configuration. No API keys to manage. No third-party sync to trust.</p>
+                <p class="feature-desc">Rapid Reaktor is the EDL — not a feed that syncs to one, the authoritative blocklist server your firewall already polls. An IP gets added, the firewall picks it up on the next poll. Zero extra config once it's pointed at us. No API keys. No third-party sync to trust or troubleshoot.</p>
             </div>
         </div>
 
@@ -1412,21 +1428,38 @@
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2l8 4.5v7L10 18l-8-4.5v-7L10 2z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M10 2v16" stroke="currentColor" stroke-width="1.4"/><path d="M2 6.5l8 4.5 8-4.5" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
                 </div>
                 <div class="feature-title">Docker Deployable</div>
-                <p class="feature-desc">Two ports. One Docker Compose command. Runs on the machine you already have. No vendor onboarding, no complex dependencies, no cloud data leaving your network. You're up and blocking within the hour.</p>
+                <p class="feature-desc">Two ports. One <code>docker compose up</code>. Runs on-prem, on hardware you already own — no cloud dependency, no vendor onboarding call, no data leaving your network. Live and blocking within the hour.</p>
             </div>
             <div class="feature-card feature-card--center">
                 <div class="feature-icon">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><line x1="7" y1="2" x2="7" y2="18" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><line x1="13" y1="2" x2="13" y2="18" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><line x1="2" y1="7" x2="18" y2="7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><line x1="2" y1="13" x2="18" y2="13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
                 </div>
                 <div class="feature-title">Granular Trigger Logic</div>
-                <p class="feature-desc">Configure exactly what triggers a block: alert type, threshold count, regex pattern, source. Require three hits before an IP gets added. Scope rules to specific firewall sources. Suppress noisy alerts that would create false positives. You control what gets blocked and why.</p>
+                <p class="feature-desc">Configure exactly what earns a block: alert type, threshold count, regex pattern, source scope. Require three hits before an IP gets added. Scope rules to specific firewall sources. Suppress the noisy alerts that would otherwise trigger false positives. Nothing gets blocked without a rule you wrote.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8.5" stroke="currentColor" stroke-width="1.4"/><path d="M10 5.5v4.5l3 2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </div>
                 <div class="feature-title">Smart TTL Management</div>
-                <p class="feature-desc">Every blocked IP expires automatically on the schedule you set. No permanent blocklist bloat. No forgotten entries locking out a legitimate user six months later. Blocks are temporary by default. You decide how long they last.</p>
+                <p class="feature-desc">Every block expires automatically on a schedule you set. Static blocklists only grow — entries pile up, nobody prunes them, and eventually a legitimate user gets locked out by a rule nobody remembers writing. Rapid Reaktor blocks are temporary by default. You decide how long they last.</p>
+            </div>
+        </div>
+
+        <div class="feat-row-4">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 10h11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M10 4l6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="feature-title">One-Click Firewall Config</div>
+                <p class="feature-desc">Rapid Reaktor generates a ready-to-deploy Palo Alto configuration and pushes it to the firewall over SSH. Most integrations mean pointing your firewall at a URL and hoping the object references line up. This is a generated, tested config pushed directly. No manual object creation. No copy-pasting CLI commands.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.4"/><rect x="12" y="2" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.4"/><rect x="2" y="12" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.4"/><rect x="12" y="12" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.4"/></svg>
+                </div>
+                <div class="feature-title">Fleet-Wide Visibility</div>
+                <p class="feature-desc">Running more than one firewall? A live status view shows DAG connectivity and EDL sync health across the whole fleet. One box going stale is easy to miss when you're only watching the one in front of you. Rapid Reaktor shows every firewall at once, so you know exactly which are current and which need attention.</p>
             </div>
         </div>
 
@@ -1437,7 +1470,7 @@
                 </div>
                 <div class="feature-body">
                     <div class="feature-title">Audit &amp; Compliance Logging</div>
-                    <p class="feature-desc">Every automated block is recorded: the alert that triggered it, the rule that matched, the IP that got added, and the exact timestamp. Nothing is a black box. When someone asks why an IP was blocked, you have a complete answer in seconds. Export to CSV for incident reviews or compliance audits.</p>
+                    <p class="feature-desc">Every automated block is logged: triggering alert, matched rule, IP, timestamp. Nothing is a black box — when someone asks why an IP got blocked, you have the full chain of evidence in seconds, not an afternoon of log spelunking. Export to CSV for incident review or compliance audits.</p>
                 </div>
                 <a href="audit.html" class="cta-outline">View the Audit Log Schema →</a>
             </div>

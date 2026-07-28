@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rapid Reaktor: Automated SQL Injection Response</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400,0..1&display=swap" rel="stylesheet"/>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          brand:        '#006970',
+          'brand-lt':   '#00919a',
+          'brand-bg':   '#e8f6f7',
+          danger:       '#b91c1c',
+          'danger-bg':  '#fff5f5',
+          success:      '#047857',
+          ink:          '#0d1f22',
+          muted:        '#4a6366',
+          rule:         '#bdc9ca',
+          amber:        '#92400e',
+          'amber-bg':   '#fdf8f0',
+          'amber-rule': '#e6d9c0',
+        },
+        fontFamily: {
+          display: ['Rajdhani', 'sans-serif'],
+          body:    ['Inter', 'sans-serif'],
+          mono:    ['"JetBrains Mono"', 'monospace'],
+          grotesk: ['"Space Grotesk"', 'sans-serif'],
+        },
+      },
+    },
+  }
+</script>
+<style>
+  @page { size: letter; margin: 0.5in; }
+
+  @media print {
+    .no-print  { display: none !important; }
+    body       { background: #fff !important; }
+    .page-wrap { box-shadow: none !important; margin: 0 !important; }
+    .btn-primary { background: transparent !important; border: 1.5px solid #006970 !important; color: #006970 !important; }
+    .btn-secondary { border: 1.5px solid #0d1f22 !important; color: #0d1f22 !important; }
+  }
+
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    vertical-align: middle;
+  }
+  .rule { border-top: 0.5px solid #bdc9ca; }
+
+  .stripe {
+    background-image: repeating-linear-gradient(
+      -45deg, transparent, transparent 4px,
+      rgba(0,105,112,0.05) 4px, rgba(0,105,112,0.05) 5px
+    );
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(0,105,112,0.35); }
+    50%       { box-shadow: 0 0 0 5px rgba(0,105,112,0); }
+  }
+  .print-btn { animation: pulse-glow 2.8s ease-in-out infinite; }
+</style>
+</head>
+<body class="bg-gray-100 font-body text-ink min-h-screen py-6">
+
+<button onclick="window.print()"
+  class="no-print print-btn fixed top-4 right-4 z-50 flex items-center gap-2 bg-brand text-white px-4 py-2 text-xs font-grotesk font-bold uppercase tracking-widest shadow-lg hover:bg-brand-lt transition-colors">
+  <span class="material-symbols-outlined !text-sm">print</span>
+  Print / Save PDF
+</button>
+
+<div class="page-wrap bg-white max-w-[8.5in] min-h-[11in] mx-auto shadow-xl flex flex-col">
+
+  <!-- Top accent -->
+  <div class="h-1.5 bg-gradient-to-r from-brand via-brand-lt to-emerald-500 flex-shrink-0"></div>
+
+  <!-- HEADER -->
+  <header class="px-10 pt-5 pb-4 flex items-center justify-between border-b border-rule">
+    <img src="logo3.png" alt="Rapid Reaktor" class="h-10 w-auto">
+    <div class="flex flex-col items-end gap-1.5">
+      <div class="flex items-center gap-5">
+        <span class="font-grotesk text-[10px] text-muted tracking-[0.2em] uppercase">Automated IP Threat Response</span>
+        <span class="bg-ink text-white text-[8px] font-mono font-semibold uppercase tracking-[0.18em] px-3 py-1">Built by Security Engineers</span>
+      </div>
+      <span class="font-mono text-[8px] text-brand tracking-[0.15em] uppercase">Enhancing EDLs by extracting IPs and automatically adding them</span>
+    </div>
+  </header>
+
+  <main class="flex-1 px-10 py-7 flex flex-col gap-7">
+
+    <!-- ── HERO ──────────────────────────────────────────────────── -->
+    <section class="grid grid-cols-12 gap-8 items-start">
+
+      <div class="col-span-7">
+        <h1 class="font-display text-[40px] font-bold leading-[1.1] text-ink mb-2">
+          Your Firewall Sees It.<br>
+          <span class="text-brand">Rapid Reaktor Acts.</span>
+        </h1>
+        <p class="font-grotesk text-[22px] font-semibold text-ink leading-snug mb-3">
+          Leverage the power of External Dynamic Lists.
+        </p>
+        <p class="font-body text-sm text-muted leading-relaxed">
+          Your Palo Alto IPS is already detecting SQL injection attempts. The problem is what happens after. Someone has to notice the alert, investigate, and manually block the attacking IP across every firewall in your environment. That takes time. Automated scanners do not wait. Rapid Reaktor watches those threat logs and the moment injection attempts are flagged, it extracts the source IP and pushes it to every EDL across your environment automatically. The attacker gets one probe.
+        </p>
+      </div>
+
+      <!-- Attack Pattern box -->
+      <div class="col-span-5">
+        <div class="bg-amber-bg border border-amber-rule p-4 relative">
+          <div class="absolute -top-2.5 left-4 bg-amber-bg border border-amber-rule px-2.5">
+            <span class="font-mono text-[8px] text-amber uppercase tracking-widest font-bold">Real-World Example</span>
+          </div>
+          <p class="font-grotesk text-[10px] font-semibold text-ink uppercase tracking-widest mb-3 pt-1">The Attack Pattern</p>
+          <div class="space-y-3">
+            <div class="flex items-start gap-3">
+              <div class="w-7 h-7 rounded-full bg-red-100 border border-red-200 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <span class="material-symbols-outlined text-danger !text-sm">manage_search</span>
+              </div>
+              <p class="font-body text-[11px] text-ink leading-snug">
+                An attacker runs an automated SQL injection scanner against your customer-facing web portal. Every input field gets probed. They are looking for one vulnerable parameter.
+              </p>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-7 h-7 rounded-full bg-red-100 border border-red-200 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <span class="material-symbols-outlined text-danger !text-sm">notifications_active</span>
+              </div>
+              <p class="font-body text-[11px] text-ink leading-snug">
+                Your Palo Alto IPS detects the injection signatures in the HTTP traffic and logs them as threat events. The data is there. But no one has responded yet.
+              </p>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-7 h-7 rounded-full bg-red-100 border border-red-200 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <span class="material-symbols-outlined text-danger !text-sm">speed</span>
+              </div>
+              <p class="font-body text-[11px] text-ink leading-snug">
+                Automated scanners do not wait for your team to catch up. Every second that IP stays unblocked, more of your application surface is being mapped.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <div class="rule"></div>
+
+    <!-- ── FEATURES ─────────────────────────────────────────────── -->
+    <section>
+      <div class="mb-5">
+        <p class="font-mono text-[9px] text-brand uppercase tracking-[0.25em] mb-1">What You Get</p>
+        <h2 class="font-display text-2xl font-bold text-ink">Built for Ops Teams. Ready the Day You Deploy.</h2>
+      </div>
+
+      <div class="grid grid-cols-3 gap-4">
+
+        <!-- Authoritative EDL Source -->
+        <div class="bg-brand-bg border border-brand/20 p-4 flex flex-col gap-2">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 bg-brand flex items-center justify-center flex-shrink-0">
+              <span class="material-symbols-outlined text-white !text-base">verified_user</span>
+            </div>
+            <span class="font-grotesk text-[10px] font-bold text-ink uppercase tracking-wide">Authoritative EDL Source</span>
+          </div>
+          <p class="font-body text-[11px] text-muted leading-snug">
+            Rapid Reaktor becomes the single authoritative source for your External Dynamic Lists. One always-current blocklist with no drift and no stale entries across your environment.
+          </p>
+        </div>
+
+        <!-- Docker Deployable -->
+        <div class="bg-brand-bg border border-brand/20 p-4 flex flex-col gap-2">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 bg-brand flex items-center justify-center flex-shrink-0">
+              <span class="material-symbols-outlined text-white !text-base">deployed_code</span>
+            </div>
+            <span class="font-grotesk text-[10px] font-bold text-ink uppercase tracking-wide">Docker Deployable</span>
+          </div>
+          <p class="font-body text-[11px] text-muted leading-snug">
+            Spin up with a single <span class="font-mono text-[10px] bg-white border border-brand/20 px-1 text-brand">docker run</span> command. No agent installs, no infrastructure changes, no downtime required.
+          </p>
+        </div>
+
+        <!-- Zero Manual Steps -->
+        <div class="bg-brand-bg border border-brand/20 p-4 flex flex-col gap-2">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 bg-brand flex items-center justify-center flex-shrink-0">
+              <span class="material-symbols-outlined text-white !text-base">smart_toy</span>
+            </div>
+            <span class="font-grotesk text-[10px] font-bold text-ink uppercase tracking-wide">Zero Manual Steps</span>
+          </div>
+          <p class="font-body text-[11px] text-muted leading-snug">
+            From detection to block, the entire response chain is fully automated. No analyst gets paged, no ticket gets opened, no one has to be watching.
+          </p>
+        </div>
+
+        <!-- All Firewalls Updated Simultaneously -->
+        <div class="bg-brand-bg border border-brand/20 p-4 flex flex-col gap-2">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 bg-brand flex items-center justify-center flex-shrink-0">
+              <span class="material-symbols-outlined text-white !text-base">lan</span>
+            </div>
+            <span class="font-grotesk text-[10px] font-bold text-ink uppercase tracking-wide">All Firewalls Updated</span>
+          </div>
+          <p class="font-body text-[11px] text-muted leading-snug">
+            Every Palo Alto firewall in your environment is updated simultaneously. No staggered rollouts, no coverage gaps. The block propagates everywhere at once.
+          </p>
+        </div>
+
+        <!-- Real-Time Log Analysis -->
+        <div class="bg-brand-bg border border-brand/20 p-4 flex flex-col gap-2">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 bg-brand flex items-center justify-center flex-shrink-0">
+              <span class="material-symbols-outlined text-white !text-base">manage_search</span>
+            </div>
+            <span class="font-grotesk text-[10px] font-bold text-ink uppercase tracking-wide">Real-Time Log Analysis</span>
+          </div>
+          <p class="font-body text-[11px] text-muted leading-snug">
+            Continuously monitors your logs 24/7. Attack patterns are detected and acted on the moment they appear, not minutes or hours later.
+          </p>
+        </div>
+
+        <!-- Configurable Triggers -->
+        <div class="bg-brand-bg border border-brand/20 p-4 flex flex-col gap-2">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 bg-brand flex items-center justify-center flex-shrink-0">
+              <span class="material-symbols-outlined text-white !text-base">tune</span>
+            </div>
+            <span class="font-grotesk text-[10px] font-bold text-ink uppercase tracking-wide">Configurable Triggers</span>
+          </div>
+          <p class="font-body text-[11px] text-muted leading-snug">
+            Define exactly what constitutes an attack for your environment. Rapid Reaktor adapts to your specific threat model with no coding required.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── CTA ──────────────────────────────────────────────────── -->
+    <section class="mt-auto">
+      <h3 class="font-display text-xl font-bold text-ink mb-1.5">Want to see it in action?</h3>
+      <p class="font-body text-xs text-muted leading-relaxed mb-4">
+        We'll walk you through a live demo on your own environment. No commitment, just a look at what automatic blocking actually looks like when an attack hits.
+      </p>
+      <div class="flex gap-3">
+        <button class="btn-primary bg-brand hover:bg-brand-lt text-white px-5 py-2.5 font-grotesk text-[9px] font-bold uppercase tracking-[0.15em] transition-colors">
+          Schedule a Demo
+        </button>
+        <button class="btn-secondary border border-ink hover:bg-ink hover:text-white text-ink px-5 py-2.5 font-grotesk text-[9px] font-bold uppercase tracking-[0.15em] transition-colors">
+          Talk to Sales
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="px-10 py-3.5 border-t border-rule flex items-center justify-between">
+    <img src="logo3.png" alt="Rapid Reaktor" class="h-6 w-auto opacity-50">
+    <p class="font-mono text-[8px] text-muted uppercase tracking-widest">© 2026 Rapid Reaktor Systems. All Rights Reserved.</p>
+  </footer>
+
+  <div class="h-1 bg-gradient-to-r from-brand via-brand-lt to-emerald-500 flex-shrink-0"></div>
+
+</div>
+</body>
+</html>
